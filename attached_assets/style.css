@@ -1,0 +1,72 @@
+
+:root {
+  --primary: #1E293B;
+  --accent: #3B82F6;
+  --light: #E0F2FE;
+  --background: #F8FAFC;
+  --text: #0F172A;
+  --font-main: 'Inter', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--background);
+  color: var(--text);
+}
+
+header {
+  background-color: var(--primary);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-family: var(--font-main);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.container p {
+  margin: 0.5rem 0 0;
+}
+
+main {
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  max-width: 600px;
+  width: 100%;
+}
+
+.card h2 {
+  font-family: var(--font-main);
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--light);
+  font-size: 0.875rem;
+}

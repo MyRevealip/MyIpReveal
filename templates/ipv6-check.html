@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="IPv6 Address Checker - Free tool to check if your connection supports IPv6 and view your IPv6 address. Learn about IPv6 vs IPv4 differences and why IPv6 matters.">
+<meta name="keywords" content="ipv6 address checker, ipv6 check, what is my ipv6, ipv6 lookup, ipv6 test, ipv6 vs ipv4, ipv6 address finder">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="IPv6 Address Checker – Test Your IPv6 Connectivity">
+<meta property="og:description" content="Check if your connection supports IPv6 and view your IPv6 address with our free tool. Learn about the benefits of IPv6.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://whatismyip.replit.app/ipv6-check">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IPv6 Address Checker – Test Your IPv6 Connectivity">
+<meta name="twitter:description" content="Check if your connection supports IPv6 and view your IPv6 address with our free tool. Learn about the benefits of IPv6.">
+{% endblock %}
+
+{% block title %}IPv6 Address Checker – Test Your IPv6 Connectivity | Free IPv6 Test{% endblock %}
+
+{% block header %}IPv6 Address Checker{% endblock %}
+{% block tagline %}Check if your connection supports IPv6 and view your IPv6 address{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="card ip-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-2">
+                    <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                        <i class="fas fa-print me-1"></i> Print IPv6 Check
+                    </button>
+                </div>
+                {% if ip_info.error %}
+                    <div class="alert alert-danger">
+                        <p>{{ ip_info.message }}</p>
+                        <p>Please try again later.</p>
+                    </div>
+                {% else %}
+                    <div class="text-center mb-4">
+                        {% if ip_info.version == 'IPv6' %}
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle fa-2x me-2"></i>
+                                <span>Your connection supports IPv6!</span>
+                            </div>
+                            <h2 class="ip-display">{{ ip_info.ip }}</h2>
+                            <p class="lead">This is your IPv6 address</p>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle fa-2x me-2"></i>
+                                <span>Your connection does not appear to support IPv6</span>
+                            </div>
+                            <h2 class="ip-display">{{ ip_info.ip }}</h2>
+                            <p class="lead">This is your IPv4 address</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-dark h-100">
+                                <h3 class="h5 mb-3"><i class="fas fa-network-wired me-2"></i> IP Information</h3>
+                                <p><span class="ip-info-label">IP Type:</span> <span class="ip-info-value">{{ ip_info.version|default('IPv4') }}</span></p>
+                                <p><span class="ip-info-label">ISP:</span> <span class="ip-info-value">{{ ip_info.org }}</span></p>
+                                <p><span class="ip-info-label">ASN:</span> <span class="ip-info-value">{{ ip_info.asn }}</span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-dark h-100">
+                                <h3 class="h5 mb-3"><i class="fas fa-map-marker-alt me-2"></i> Location</h3>
+                                <p><span class="ip-info-label">Country:</span> <span class="ip-info-value">{{ ip_info.country_name }}</span></p>
+                                <p><span class="ip-info-label">Region:</span> <span class="ip-info-value">{{ ip_info.region }}</span></p>
+                                <p><span class="ip-info-label">City:</span> <span class="ip-info-value">{{ ip_info.city }}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="section-header">Understanding IPv4 vs IPv6</h2>
+            <p>The Internet Protocol (IP) is responsible for addressing and routing data packets so they can travel across networks and arrive at the correct destination. There are two versions of IP in use today: IPv4 and IPv6.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-header">
+                            <h3 class="h5 mb-0">IPv4</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Format:</strong> 32-bit address written as four numbers separated by periods (e.g., 192.168.1.1)</p>
+                            <p><strong>Address Space:</strong> Approximately 4.3 billion unique addresses</p>
+                            <p><strong>Status:</strong> Running out of available addresses</p>
+                            <p><strong>Example:</strong> 203.0.113.1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-header">
+                            <h3 class="h5 mb-0">IPv6</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Format:</strong> 128-bit address written as eight groups of hexadecimal digits separated by colons</p>
+                            <p><strong>Address Space:</strong> 340 undecillion (3.4×10^38) unique addresses</p>
+                            <p><strong>Status:</strong> Gradually being adopted worldwide</p>
+                            <p><strong>Example:</strong> 2001:0db8:85a3:0000:0000:8a2e:0370:7334</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h5 mt-4">Why is IPv6 important?</h3>
+            <p>IPv6 was developed to address several limitations of IPv4:</p>
+            <ul>
+                <li><strong>Address Exhaustion:</strong> IPv4's limited address space is insufficient for the growing number of internet-connected devices.</li>
+                <li><strong>Improved Security:</strong> IPv6 includes IPsec (Internet Protocol Security) by default.</li>
+                <li><strong>Better Performance:</strong> Simplified header format leads to more efficient routing.</li>
+                <li><strong>Auto-configuration:</strong> IPv6 includes built-in address auto-configuration capabilities.</li>
+            </ul>
+            
+            <h3 class="h5 mt-4">IPv6 Adoption</h3>
+            <p>As of 2023, global IPv6 adoption continues to grow, with many major network providers, websites, and services now supporting IPv6. However, many networks still operate on IPv4 or use transitional technologies like Dual-Stack, NAT64, or tunneling to bridge between IPv4 and IPv6 networks.</p>
+            
+            <div class="alert alert-info mt-4">
+                <p class="mb-0"><strong>Recommendation:</strong> If your connection doesn't support IPv6 yet, contact your Internet Service Provider to ask about their IPv6 deployment plans.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

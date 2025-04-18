@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Find out where your IP address says you're located. See your city, region, and ISP instantly.">
+{% endblock %}
+
+{% block title %}My IP Address Location – Where Am I?{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h1>My IP Address Location</h1>
+            <p class="lead">Find out where your IP address says you're located</p>
+        </div>
+
+        <div class="card ip-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-2">
+                    <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                        <i class="fas fa-print me-1"></i> Print Location Info
+                    </button>
+                </div>
+                {% if ip_info.error %}
+                    <div class="alert alert-danger">
+                        <p>{{ ip_info.message }}</p>
+                        <p>Please try again later.</p>
+                    </div>
+                {% else %}
+                    <div class="text-center mb-4">
+                        <h2 class="ip-display">{{ ip_info.ip }}</h2>
+                        <p class="lead">Your location according to your IP address:</p>
+                    </div>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-dark h-100">
+                                <h3 class="h5 mb-3"><i class="fas fa-map-marker-alt me-2"></i> Location Details</h3>
+                                <p><span class="ip-info-label">City:</span> <span class="ip-info-value">{{ ip_info.city }}</span></p>
+                                <p><span class="ip-info-label">Region/State:</span> <span class="ip-info-value">{{ ip_info.region }}</span></p>
+                                <p><span class="ip-info-label">Country:</span> <span class="ip-info-value">{{ ip_info.country_name }}</span></p>
+                                <p><span class="ip-info-label">Postal Code:</span> <span class="ip-info-value">{{ ip_info.postal }}</span></p>
+                                <p><span class="ip-info-label">Coordinates:</span> <span class="ip-info-value">{{ ip_info.latitude }}, {{ ip_info.longitude }}</span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-dark h-100">
+                                <h3 class="h5 mb-3"><i class="fas fa-info-circle me-2"></i> Additional Information</h3>
+                                <p><span class="ip-info-label">Timezone:</span> <span class="ip-info-value">{{ ip_info.timezone }}</span></p>
+                                <p><span class="ip-info-label">ISP:</span> <span class="ip-info-value">{{ ip_info.org }}</span></p>
+                                <p><span class="ip-info-label">ASN:</span> <span class="ip-info-value">{{ ip_info.asn }}</span></p>
+                                <p><span class="ip-info-label">Currency:</span> <span class="ip-info-value">{{ ip_info.currency_name }}</span></p>
+                                <p><span class="ip-info-label">Languages:</span> <span class="ip-info-value">{{ ip_info.languages }}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="section-header">Understanding IP Geolocation</h2>
+            <p>IP geolocation is the process of determining the geographic location of an internet-connected device by analyzing its IP address. This technology uses databases that map IP addresses to physical locations based on information from internet service providers and other sources.</p>
+            
+            <h3 class="h5 mt-4">How accurate is IP geolocation?</h3>
+            <p>IP geolocation accuracy varies depending on several factors:</p>
+            <ul>
+                <li><strong>Country level:</strong> Generally 95-99% accurate</li>
+                <li><strong>Region/state level:</strong> 80-90% accurate</li>
+                <li><strong>City level:</strong> 50-80% accurate, depending on the area</li>
+                <li><strong>Exact location:</strong> IP addresses cannot pinpoint exact physical addresses</li>
+            </ul>
+            
+            <h3 class="h5 mt-4">Why might my location be incorrect?</h3>
+            <p>Several factors can cause your IP to show an incorrect location:</p>
+            <div class="row mt-3">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h4 class="h6"><i class="fas fa-globe-americas me-2"></i> VPN Usage</h4>
+                            <p class="mb-0">If you're using a Virtual Private Network (VPN), your location will show as the VPN server's location, not your actual physical location.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h4 class="h6"><i class="fas fa-building me-2"></i> ISP Infrastructure</h4>
+                            <p class="mb-0">Your ISP may route your connection through servers in different cities or regions, making your IP appear to be in a different location.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h4 class="h6"><i class="fas fa-database me-2"></i> Outdated Database</h4>
+                            <p class="mb-0">IP address allocations change over time, and geolocation databases may not always be up-to-date with the latest changes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h4 class="h6"><i class="fas fa-broadcast-tower me-2"></i> Mobile Networks</h4>
+                            <p class="mb-0">Mobile carriers often route traffic through centralized gateways, which can make your location appear to be in a different city or even state.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-4">
+                <p class="mb-0"><strong>Privacy Note:</strong> We respect your privacy and do not store your IP address or location information. This service is provided for informational purposes only.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

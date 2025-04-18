@@ -1,0 +1,328 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Free online port scanner tool. Check if common ports are open on any IP address or domain. Identify open services and potential security vulnerabilities.">
+<meta name="keywords" content="port scanner, open port checker, security scanner, network port scan, tcp port scanner, check open ports, port scan tool">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Online Port Scanner Tool | MyIPReveal.com">
+<meta property="og:description" content="Free online port scanner tool. Check if common ports are open on any IP address or domain. Identify open services and potential security vulnerabilities.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://myipreveal.com/port-scanner">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Online Port Scanner Tool | MyIPReveal.com">
+<meta name="twitter:description" content="Free online port scanner tool. Check if common ports are open on any IP address or domain. Identify open services and potential security vulnerabilities.">
+{% endblock %}
+
+{% block title %}Online Port Scanner Tool | MyIPReveal.com{% endblock %}
+
+{% block header %}Online Port Scanner Tool{% endblock %}
+{% block tagline %}Check for open ports and network services{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="card content-card">
+            <div class="card-body p-md-5">
+                <div class="d-flex justify-content-end mb-2">
+                    <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                        <i class="fas fa-print me-1"></i> Print Results
+                    </button>
+                </div>
+                
+                <h2 class="h3 mb-4">Scan Network Ports</h2>
+                
+                <div class="alert alert-info">
+                    <p class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i> This tool checks if common TCP ports are open on a target host. It can help identify available services and potential security vulnerabilities.
+                    </p>
+                </div>
+                
+                <form id="port-scan-form" class="mb-4 network-tool-form" data-ajax="true" action="/api/port-scan">
+                    <div class="mb-3">
+                        <label for="target" class="form-label">Hostname or IP Address</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="target" name="target" 
+                                   placeholder="Enter a domain or IP address (e.g., example.com)" required>
+                            <button class="btn btn-primary" type="submit" id="scan-button">
+                                <i class="fas fa-search me-2"></i>Scan Ports
+                            </button>
+                        </div>
+                        <div class="form-text text-muted">Examples: yourwebsite.com, 104.16.85.20, github.com</div>
+                    </div>
+                </form>
+                
+                <!-- The loading spinner will be added by network-tools.js -->
+                <div id="results-container" class="results-container d-none"></div>
+                
+                <div id="error-container" class="alert alert-danger d-none">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="error-message"></span>
+                </div>
+                
+                <div id="detailed-results" class="d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="h4 mb-0">Scan Results</h3>
+                        <div>
+                            <span class="badge bg-success me-2" id="target-info"></span>
+                            <span class="badge bg-primary" id="timestamp-info"></span>
+                        </div>
+                    </div>
+                    
+                    <div id="no-open-ports" class="alert alert-warning d-none">
+                        <i class="fas fa-info-circle me-2"></i> No open ports were detected on the common ports that were scanned.
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mb-4" id="port-results-table">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>Port</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="port-results"></tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="border-top pt-3 mt-3">
+                        <div class="alert alert-secondary">
+                            <p class="mb-0 small">
+                                <i class="fas fa-shield-alt me-2"></i> <strong>Security Note:</strong> 
+                                Open ports may be intentional for legitimate services or could potentially expose your system to attacks. 
+                                If you're not sure why a port is open, you should investigate further.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-5">
+    <div class="col-lg-8">
+        <div class="card content-card">
+            <div class="card-body p-md-5">
+                <h2 class="h3 mb-4">About Port Scanning</h2>
+                
+                <p>A port scan is a method for determining which network ports on a server or device are open and potentially 
+                   accepting connections. Port scanning helps identify what services are running on a host and can reveal 
+                   security vulnerabilities or misconfigurations.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <a href="javascript:void(0)" onclick="document.getElementById('target').value='cloudflare.com'; document.getElementById('port-scan-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                            <div class="card h-100 bg-dark interactive-card">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-search me-2"></i> Security Testing</h3>
+                                    <p>Identify potential security vulnerabilities by discovering which services are exposed to the internet.</p>
+                                    <div class="mt-2 text-primary small">
+                                        <i class="fas fa-play me-1"></i> Try Example: CloudFlare (cloudflare.com)
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <a href="javascript:void(0)" onclick="document.getElementById('target').value='gmail.com'; document.getElementById('port-scan-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                            <div class="card h-100 bg-dark interactive-card">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-server me-2"></i> Network Inventory</h3>
+                                    <p>Discover what services are running on a server and verify that only necessary ports are open.</p>
+                                    <div class="mt-2 text-primary small">
+                                        <i class="fas fa-play me-1"></i> Try Example: Gmail (gmail.com)
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <h3 class="h4 mt-4 mb-3">Common Ports and Services</h3>
+                
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Port</th>
+                                <th>Service</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>21</td>
+                                <td>FTP</td>
+                                <td>File Transfer Protocol - for transferring files</td>
+                            </tr>
+                            <tr>
+                                <td>22</td>
+                                <td>SSH</td>
+                                <td>Secure Shell - encrypted remote administration</td>
+                            </tr>
+                            <tr>
+                                <td>25</td>
+                                <td>SMTP</td>
+                                <td>Simple Mail Transfer Protocol - for sending email</td>
+                            </tr>
+                            <tr>
+                                <td>53</td>
+                                <td>DNS</td>
+                                <td>Domain Name System - translates domain names to IP addresses</td>
+                            </tr>
+                            <tr>
+                                <td>80</td>
+                                <td>HTTP</td>
+                                <td>Hypertext Transfer Protocol - for serving web pages</td>
+                            </tr>
+                            <tr>
+                                <td>443</td>
+                                <td>HTTPS</td>
+                                <td>HTTP Secure - encrypted web traffic</td>
+                            </tr>
+                            <tr>
+                                <td>3306</td>
+                                <td>MySQL</td>
+                                <td>MySQL database server</td>
+                            </tr>
+                            <tr>
+                                <td>3389</td>
+                                <td>RDP</td>
+                                <td>Remote Desktop Protocol - for remote desktop access</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="alert alert-warning mt-4">
+                    <h4 class="h5"><i class="fas fa-exclamation-triangle me-2"></i>Important Security Information</h4>
+                    <p>This port scanner is provided for educational and legitimate security testing purposes only. You should only scan:</p>
+                    <ul class="mb-0">
+                        <li>Systems you own or have permission to scan</li>
+                        <li>Your own servers or network devices</li>
+                        <li>Hosts you're authorized to test</li>
+                    </ul>
+                    <p class="mt-3 mb-0">Unauthorized port scanning may be against the terms of service of many organizations and could potentially be illegal in some jurisdictions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schema.org structured data for NetworkTool -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online Port Scanner Tool",
+  "applicationCategory": "NetworkingApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Free online port scanner tool. Check if common ports are open on any IP address or domain. Identify open services and potential security vulnerabilities.",
+  "provider": {
+    "@type": "Organization",
+    "name": "MyIPReveal.com"
+  }
+}
+</script>
+
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a port scanner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A port scanner is a tool that checks for open TCP or UDP ports on a server or network device. It helps identify which services are running and potentially accessible, which is useful for both system administration and security assessment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is port scanning legal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Port scanning is legal when performed on systems you own or have explicit permission to scan. However, scanning systems without authorization may violate terms of service or laws in some jurisdictions. Always ensure you have proper authorization before scanning any system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I use port scanning results?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Port scanning results can help you: 1) Identify unnecessary open ports that should be closed for security, 2) Verify that required services are running and accessible, 3) Troubleshoot connectivity issues, and 4) Discover potential security vulnerabilities in your network."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why might I want to check for open ports?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Checking for open ports helps ensure your systems are properly secured by identifying services that might be unnecessarily exposed to the internet. It's also useful for verifying that services you need are running correctly and accessible through your firewall."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize any example link functionality
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetParam = urlParams.get('target');
+    if (targetParam) {
+        document.getElementById('target').value = targetParam;
+        
+        // Trigger form submission for port scan
+        setTimeout(function() {
+            document.getElementById('port-scan-form').dispatchEvent(new Event('submit'));
+        }, 500);
+    }
+    
+    // Network-tools.js handles the loading spinner and form submission
+    console.log('Port scanner tool initialized with loading spinner support');
+});
+</script>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+    .port-results {
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .interactive-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+    }
+    
+    .interactive-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-color: rgba(33, 150, 243, 0.4);
+    }
+    
+    .interactive-card .text-primary {
+        transition: color 0.2s;
+    }
+    
+    .interactive-card:hover .text-primary {
+        color: #42a5f5 !important;
+    }
+</style>
+{% endblock %}

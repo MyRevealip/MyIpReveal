@@ -1,0 +1,502 @@
+{% extends 'base.html' %}
+
+{% block title %}Free Online Ping Tool | Test Website Response Time | MyIPReveal.com{% endblock %}
+
+{% block meta_description %}Free online ping tool. Test network connectivity and response times to any website or server. Check if a host is up and measure latency.{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item">Network Tools</li>
+                    <li class="breadcrumb-item active" aria-current="page">Ping Tool</li>
+                </ol>
+            </nav>
+            
+            <div class="card mt-3">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h4 mb-0"><i class="fas fa-exchange-alt me-2"></i>Online Ping Tool</h1>
+                </div>
+                <div class="card-body">
+                    <form id="ping-form" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" id="target" class="form-control" placeholder="Enter a hostname or IP address" required>
+                            <select id="ping-count" class="form-select" style="max-width: 150px;">
+                                <option value="3">3 packets</option>
+                                <option value="5" selected>5 packets</option>
+                                <option value="10">10 packets</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-exchange-alt me-2"></i>Ping
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator" class="text-center my-5 d-none">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Pinging host...</p>
+                    </div>
+                    
+                    <!-- Error Container -->
+                    <div id="error-container" class="alert alert-danger d-none">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <span id="error-message"></span>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div id="results-container" class="d-none">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                                <h2 class="h5 mb-0">Ping Results for <span id="target-info" class="text-info"></span></h2>
+                                <span id="status-badge" class="badge bg-success">Online</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 mb-3 mb-md-0">
+                                        <div class="card h-100 bg-light">
+                                            <div class="card-body text-center">
+                                                <h3 class="h6 mb-2 text-muted">Average Latency</h3>
+                                                <p id="avg-latency" class="h3 mb-0 stat-value">-</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3 mb-md-0">
+                                        <div class="card h-100 bg-light">
+                                            <div class="card-body text-center">
+                                                <h3 class="h6 mb-2 text-muted">Packet Loss</h3>
+                                                <p id="packet-loss" class="h3 mb-0 stat-value">-</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card h-100 bg-light">
+                                            <div class="card-body text-center">
+                                                <h3 class="h6 mb-2 text-muted">Min/Max Time</h3>
+                                                <p id="min-max-time" class="h3 mb-0 stat-value">-</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h3 class="h5 mb-3">Ping Output</h3>
+                                <div class="ping-results p-3 rounded mb-3">
+                                    <pre id="ping-output" class="mb-0 text-break"></pre>
+                                </div>
+                                
+                                <div class="alert alert-info mb-0">
+                                    <h4 class="h6 mb-2"><i class="fas fa-info-circle me-2"></i>About This Result</h4>
+                                    <p class="mb-2 small">This ping test was performed from our server to your target. Your actual connection to this host may differ based on your location and network path.</p>
+                                    <p class="mb-0 small" id="timestamp">Tested on: <span id="test-time"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <button id="print-button" class="btn btn-outline-dark btn-sm">
+                                <i class="fas fa-print me-2"></i>Print Results
+                            </button>
+                            <div>
+                                <span class="text-muted me-2">Share results:</span>
+                                <button id="copy-link-button" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-link me-2"></i>Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="h4 mt-4 mb-3">What is a Ping Test?</h2>
+                    
+                    <p>Ping is a basic network diagnostic tool that tests the connectivity between your computer and another 
+                       host on the internet. It works by sending ICMP Echo Request packets to the target host and waiting for a response.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-4">
+                            <a href="javascript:void(0)" onclick="document.getElementById('target').value='google.com'; document.getElementById('ping-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                                <div class="card h-100 bg-dark interactive-card">
+                                    <div class="card-body">
+                                        <h3 class="h5 mb-3"><i class="fas fa-tachometer-alt me-2"></i> Connection Speed</h3>
+                                        <p>Measure the response time between our server and a major website to benchmark connection quality.</p>
+                                        <div class="mt-2 text-primary small">
+                                            <i class="fas fa-play me-1"></i> Try Example: Google.com
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <a href="javascript:void(0)" onclick="document.getElementById('target').value='1.1.1.1'; document.getElementById('ping-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                                <div class="card h-100 bg-dark interactive-card">
+                                    <div class="card-body">
+                                        <h3 class="h5 mb-3"><i class="fas fa-check-circle me-2"></i> Network Status</h3>
+                                        <p>Check if a specific host is online and responding to ping requests.</p>
+                                        <div class="mt-2 text-primary small">
+                                            <i class="fas fa-play me-1"></i> Try Example: Cloudflare DNS (1.1.1.1)
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <h3 class="h4 mt-4 mb-3">How to Interpret Ping Results</h3>
+                    
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Good Value</th>
+                                    <th>Interpretation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Latency</td>
+                                    <td>&lt; 100ms</td>
+                                    <td>Lower is better. Below 20ms is excellent, 20-100ms is good, over 100ms may cause noticeable delay.</td>
+                                </tr>
+                                <tr>
+                                    <td>Packet Loss</td>
+                                    <td>0%</td>
+                                    <td>Any packet loss indicates network issues. 1-2% is concerning, above 5% indicates significant problems.</td>
+                                </tr>
+                                <tr>
+                                    <td>Jitter</td>
+                                    <td>&lt; 30ms</td>
+                                    <td>Variation in ping time. Low jitter (consistent ping times) indicates a stable connection.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="alert alert-secondary mt-4">
+                        <h4 class="h5"><i class="fas fa-lightbulb me-2"></i>Common Uses for Ping</h4>
+                        <ul class="mb-0">
+                            <li>Testing if a website or server is online</li>
+                            <li>Measuring network latency and response times</li>
+                            <li>Diagnosing connection issues</li>
+                            <li>Monitoring network reliability</li>
+                            <li>Testing changes to network configurations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schema.org structured data for NetworkTool -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online Ping Tool",
+  "applicationCategory": "NetworkingApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Free online ping tool. Test network connectivity and response times to any website or server. Check if a host is up and measure latency.",
+  "provider": {
+    "@type": "Organization",
+    "name": "MyIPReveal.com"
+  }
+}
+</script>
+
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does a ping test tell you?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A ping test measures the round-trip time it takes for data packets to travel from your computer to a remote server and back. It tells you if a host is reachable (online), how fast the connection is (latency), and how reliable it is (packet loss). Lower ping times indicate better network performance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good ping speed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A good ping speed depends on the application, but generally: Under 20ms is excellent (ideal for online gaming and real-time applications), 20-50ms is very good, 50-100ms is acceptable for most uses, and over 100ms may cause noticeable delays in interactive applications. For regular web browsing, anything under 300ms is typically acceptable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why might a host not respond to ping?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A host might not respond to ping for several reasons: 1) The host is offline or unreachable, 2) Firewalls or security settings are blocking ICMP packets, 3) Network congestion is causing packet loss, 4) The host is deliberately configured not to respond to pings for security reasons. Many cloud services and servers disable ping responses by default."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I improve my ping time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "To improve ping times: 1) Use a wired connection instead of Wi-Fi, 2) Close bandwidth-intensive applications, 3) Connect to servers geographically closer to you, 4) Upgrade your internet connection, 5) Reset your router and modem, 6) Update network drivers, 7) Use a gaming-optimized router or QoS settings if gaming is important to you."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('ping-form');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const resultsContainer = document.getElementById('results-container');
+    const errorContainer = document.getElementById('error-container');
+    const errorMessage = document.getElementById('error-message');
+    const pingOutput = document.getElementById('ping-output');
+    const targetInfo = document.getElementById('target-info');
+    const statusBadge = document.getElementById('status-badge');
+    const avgLatency = document.getElementById('avg-latency');
+    const packetLoss = document.getElementById('packet-loss');
+    const minMaxTime = document.getElementById('min-max-time');
+    const testTime = document.getElementById('test-time');
+    const printButton = document.getElementById('print-button');
+    const copyLinkButton = document.getElementById('copy-link-button');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const target = document.getElementById('target').value.trim();
+        const count = document.getElementById('ping-count').value;
+        
+        if (!target) {
+            showError('Please enter a valid hostname or IP address');
+            return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.classList.remove('d-none');
+        resultsContainer.classList.add('d-none');
+        errorContainer.classList.add('d-none');
+        
+        // Make API request
+        fetch('/api/ping', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ target: target, count: count })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading indicator
+            loadingIndicator.classList.add('d-none');
+            
+            if (data.error) {
+                showError(data.message || 'An error occurred during the ping test');
+                return;
+            }
+            
+            displayResults(data, target, count);
+            
+            // Update URL with parameters for sharing
+            updateURLWithParameters(target, count);
+        })
+        .catch(error => {
+            loadingIndicator.classList.add('d-none');
+            showError('An error occurred while communicating with the server');
+            console.error('Error:', error);
+        });
+    });
+    
+    function displayResults(data, target, count) {
+        // Show results container
+        resultsContainer.classList.remove('d-none');
+        
+        // Set target info
+        targetInfo.textContent = target;
+        
+        // Set timestamp
+        testTime.textContent = new Date().toLocaleString();
+        
+        // Update status badge
+        if (data.success) {
+            statusBadge.textContent = 'Online';
+            statusBadge.className = 'badge bg-success';
+        } else {
+            statusBadge.textContent = 'Offline';
+            statusBadge.className = 'badge bg-danger';
+        }
+        
+        // Update stats
+        if (data.avg_ms !== undefined) {
+            avgLatency.textContent = data.avg_ms.toFixed(2) + ' ms';
+            
+            // Add color coding based on latency
+            if (data.avg_ms < 20) {
+                avgLatency.classList.add('text-success');
+                avgLatency.classList.remove('text-warning', 'text-danger');
+            } else if (data.avg_ms < 100) {
+                avgLatency.classList.add('text-warning');
+                avgLatency.classList.remove('text-success', 'text-danger');
+            } else {
+                avgLatency.classList.add('text-danger');
+                avgLatency.classList.remove('text-success', 'text-warning');
+            }
+        } else {
+            avgLatency.textContent = 'N/A';
+        }
+        
+        if (data.packet_loss !== undefined) {
+            packetLoss.textContent = data.packet_loss.toFixed(0) + '%';
+            
+            // Add color coding based on packet loss
+            if (data.packet_loss === 0) {
+                packetLoss.classList.add('text-success');
+                packetLoss.classList.remove('text-warning', 'text-danger');
+            } else if (data.packet_loss < 5) {
+                packetLoss.classList.add('text-warning');
+                packetLoss.classList.remove('text-success', 'text-danger');
+            } else {
+                packetLoss.classList.add('text-danger');
+                packetLoss.classList.remove('text-success', 'text-warning');
+            }
+        } else {
+            packetLoss.textContent = 'N/A';
+        }
+        
+        if (data.min_ms !== undefined && data.max_ms !== undefined) {
+            minMaxTime.textContent = data.min_ms.toFixed(2) + '/' + data.max_ms.toFixed(2) + ' ms';
+        } else {
+            minMaxTime.textContent = 'N/A';
+        }
+        
+        // Set ping output
+        pingOutput.textContent = data.output || 'No output available';
+    }
+    
+    function showError(message) {
+        errorContainer.classList.remove('d-none');
+        errorMessage.textContent = message;
+        resultsContainer.classList.add('d-none');
+    }
+    
+    function updateURLWithParameters(target, count) {
+        // Create shareable URL
+        const url = new URL(window.location);
+        url.searchParams.set('target', target);
+        url.searchParams.set('count', count);
+        window.history.replaceState({}, '', url);
+    }
+    
+    // Print button functionality
+    printButton.addEventListener('click', function() {
+        window.print();
+    });
+    
+    // Copy link button functionality
+    copyLinkButton.addEventListener('click', function() {
+        const currentUrl = window.location.href;
+        
+        navigator.clipboard.writeText(currentUrl).then(function() {
+            // Change button text temporarily to indicate success
+            const originalText = copyLinkButton.innerHTML;
+            copyLinkButton.innerHTML = '<i class="fas fa-check me-2"></i>Copied!';
+            
+            setTimeout(function() {
+                copyLinkButton.innerHTML = originalText;
+            }, 2000);
+        }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    });
+    
+    // Add a default example or previous search if available
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetParam = urlParams.get('target');
+    const countParam = urlParams.get('count');
+    
+    if (targetParam) {
+        document.getElementById('target').value = targetParam;
+        if (countParam) {
+            document.getElementById('ping-count').value = countParam;
+        }
+        // Auto-submit if coming with parameters
+        form.dispatchEvent(new Event('submit'));
+    }
+});
+</script>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+    .ping-results {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    pre {
+        white-space: pre-wrap;
+        font-family: var(--bs-font-monospace);
+        font-size: 0.875rem;
+    }
+    
+    .stat-value {
+        transition: color 0.3s;
+    }
+    
+    .interactive-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+    }
+    
+    .interactive-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-color: rgba(33, 150, 243, 0.4);
+    }
+    
+    .interactive-card .text-primary {
+        transition: color 0.2s;
+    }
+    
+    .interactive-card:hover .text-primary {
+        color: #42a5f5 !important;
+    }
+    
+    @media print {
+        .breadcrumb, form, .interactive-card, #print-button, #copy-link-button, .alert-secondary {
+            display: none !important;
+        }
+        
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa !important;
+            color: #000 !important;
+            border-bottom: 1px solid #dee2e6 !important;
+        }
+        
+        body {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    }
+</style>
+{% endblock %}

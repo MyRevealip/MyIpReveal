@@ -1,0 +1,59 @@
+You are building a static HTML5 website hosted on Replit.
+
+📌 GOAL:
+Create a clean, responsive, SEO-optimized IP address tool site with the following structure, pages, and best practices.
+
+---
+
+🔐 HOMEPAGE: `/`
+- Title: What Is My IP Address – Free IP Lookup Tool
+- Meta Description: Quickly find your public IP address, location, and ISP info. No ads, no tracking – just a fast, free IP lookup tool.
+- Heading: <h1>What Is My IP Address?</h1>
+- Functionality:
+  - Use IP API (like ipapi.co or ipinfo.io) to auto-detect and display the user’s:
+    - IPv4 address
+    - IPv6 address (if available)
+    - City/Region
+    - Internet Service Provider
+  - Display results clearly in a box styled with CSS
+
+---
+
+📄 ADDITIONAL PAGES (Each as separate `.html` files with unique <title> and <meta> tags):
+
+1. `/ip-address-lookup`
+   - Title: IP Address Lookup – Track Location & ISP
+   - Meta Description: Use our IP address lookup tool to discover your location, ISP, city, and more. Fast and private results.
+   - <h1>IP Address Lookup</h1>
+
+2. `/my-ip-address-location`
+   - Title: My IP Address Location – Where Am I?
+   - Meta Description: Find out where your IP address says you're located. See your city, region, and ISP instantly.
+   - <h1>My IP Address Location</h1>
+
+3. `/ipv6-check`
+   - Title: What Is My IPv6 Address – IPv6 Lookup Tool
+   - Meta Description: Check your IPv6 address online with our instant tool. Understand the difference between IPv4 and IPv6.
+   - <h1>IPv6 Address Checker</h1>
+
+4. `/ip-locator`
+   - Title: IP Locator – Track IP in Seconds
+   - Meta Description: Use our IP locator to trace any IP address to its location and service provider. Fast and accurate tool.
+   - <h1>IP Locator</h1>
+
+5. `/current-ip-address`
+   - Title: Current IP Address – Instantly Detect Your IP
+   - Meta Description: Your current IP address is shown here along with location data. Accurate and private lookup tool.
+   - <h1>Current IP Address</h1>
+
+6. `/ip-vs-mac-address`
+   - Title: IP vs MAC Address – Key Differences Explained
+   - Meta Description: Learn the difference between an IP address and a MAC address with this clear and easy-to-understand guide.
+   - <h1>IP vs MAC Address</h1>
+
+---
+
+✅ SEO + TECHNICAL REQUIREMENTS (Apply to all pages):
+
+- Include one `<h1>` per page with the primary keyword.
+- Use `<

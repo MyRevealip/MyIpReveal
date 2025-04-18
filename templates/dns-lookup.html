@@ -1,0 +1,509 @@
+{% extends 'base.html' %}
+
+{% block title %}Free DNS Lookup Tool | Check DNS Records | MyIPReveal.com{% endblock %}
+
+{% block meta_description %}Free online DNS lookup tool. Check DNS records (A, AAAA, MX, TXT, NS) for any domain name. View DNS propagation and troubleshoot DNS issues.{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item">Network Tools</li>
+                    <li class="breadcrumb-item active" aria-current="page">DNS Lookup</li>
+                </ol>
+            </nav>
+            
+            <div class="card mt-3">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h4 mb-0"><i class="fas fa-book me-2"></i>DNS Lookup Tool</h1>
+                </div>
+                <div class="card-body">
+                    <form id="dns-lookup-form" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" id="domain" class="form-control" placeholder="Enter a domain name (e.g., google.com)" required>
+                            <select id="record-type" class="form-select" style="max-width: 150px;">
+                                <option value="A">A (IPv4)</option>
+                                <option value="AAAA">AAAA (IPv6)</option>
+                                <option value="MX">MX (Mail)</option>
+                                <option value="NS">NS (Nameserver)</option>
+                                <option value="TXT">TXT (Text)</option>
+                                <option value="CNAME">CNAME (Alias)</option>
+                                <option value="SOA">SOA (Authority)</option>
+                                <option value="ALL">All Records</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>Lookup DNS
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator" class="text-center my-5 d-none">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Querying DNS servers...</p>
+                    </div>
+                    
+                    <!-- Error Container -->
+                    <div id="error-container" class="alert alert-danger d-none">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <span id="error-message"></span>
+                    </div>
+                    
+                    <!-- Results Container -->
+                    <div id="results-container" class="d-none">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h2 class="h5 mb-0">DNS Records for <span id="domain-info" class="text-info"></span></h2>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="no-records" class="alert alert-warning m-3 d-none">
+                                    No DNS records found for the selected type.
+                                </div>
+                                <div id="dns-results-wrapper" class="table-responsive">
+                                    <table class="table table-striped table-hover mb-0">
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <th>Record Type</th>
+                                                <th>TTL</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dns-results">
+                                            <!-- DNS results will be inserted here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <button id="print-button" class="btn btn-outline-dark btn-sm">
+                                <i class="fas fa-print me-2"></i>Print Results
+                            </button>
+                            <div>
+                                <span class="text-muted me-2">Share results:</span>
+                                <button id="copy-link-button" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-link me-2"></i>Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="h4 mt-4 mb-3">What is a DNS Lookup?</h2>
+                    
+                    <p>DNS (Domain Name System) lookup allows you to retrieve the specific DNS records associated with a domain name. 
+                    These records control how internet traffic is directed, including web, email, and other services.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-4">
+                            <a href="javascript:void(0)" onclick="document.getElementById('domain').value='github.com'; document.getElementById('record-type').value='A'; document.getElementById('dns-lookup-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                                <div class="card h-100 bg-dark interactive-card">
+                                    <div class="card-body">
+                                        <h3 class="h5 mb-3"><i class="fas fa-server me-2"></i> Website Records</h3>
+                                        <p>Check the A records for a website to see which IP addresses it resolves to.</p>
+                                        <div class="mt-2 text-primary small">
+                                            <i class="fas fa-play me-1"></i> Try Example: GitHub.com A Records
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <a href="javascript:void(0)" onclick="document.getElementById('domain').value='gmail.com'; document.getElementById('record-type').value='MX'; document.getElementById('dns-lookup-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                                <div class="card h-100 bg-dark interactive-card">
+                                    <div class="card-body">
+                                        <h3 class="h5 mb-3"><i class="fas fa-envelope me-2"></i> Email Records</h3>
+                                        <p>View MX (Mail Exchange) records to see mail server configurations for a domain.</p>
+                                        <div class="mt-2 text-primary small">
+                                            <i class="fas fa-play me-1"></i> Try Example: Gmail.com MX Records
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <h3 class="h4 mt-4 mb-3">Common DNS Record Types</h3>
+                    
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Record Type</th>
+                                    <th>Purpose</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A</td>
+                                    <td>Address</td>
+                                    <td>Maps a domain to an IPv4 address</td>
+                                </tr>
+                                <tr>
+                                    <td>AAAA</td>
+                                    <td>IPv6 Address</td>
+                                    <td>Maps a domain to an IPv6 address</td>
+                                </tr>
+                                <tr>
+                                    <td>CNAME</td>
+                                    <td>Canonical Name</td>
+                                    <td>Creates an alias from one domain to another</td>
+                                </tr>
+                                <tr>
+                                    <td>MX</td>
+                                    <td>Mail Exchange</td>
+                                    <td>Specifies mail servers for receiving email</td>
+                                </tr>
+                                <tr>
+                                    <td>NS</td>
+                                    <td>Name Server</td>
+                                    <td>Delegates a domain to DNS servers</td>
+                                </tr>
+                                <tr>
+                                    <td>TXT</td>
+                                    <td>Text</td>
+                                    <td>Stores text information (often for SPF, DKIM verification)</td>
+                                </tr>
+                                <tr>
+                                    <td>SOA</td>
+                                    <td>Start of Authority</td>
+                                    <td>Contains administrative information about the zone</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="alert alert-info mt-4">
+                        <h4 class="h5"><i class="fas fa-lightbulb me-2"></i>Common Uses for DNS Lookup</h4>
+                        <ul class="mb-0">
+                            <li>Troubleshooting website connection issues</li>
+                            <li>Verifying DNS propagation after changes</li>
+                            <li>Checking email server configurations</li>
+                            <li>Investigating domain ownership and hosting details</li>
+                            <li>Verifying SPF, DKIM, and DMARC records for email security</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schema.org structured data for NetworkTool -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online DNS Lookup Tool",
+  "applicationCategory": "NetworkingApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Free online DNS lookup tool. Check DNS records (A, AAAA, MX, TXT, NS) for any domain name. View DNS propagation and troubleshoot DNS issues.",
+  "provider": {
+    "@type": "Organization",
+    "name": "MyIPReveal.com"
+  }
+}
+</script>
+
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is DNS and why is it important?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DNS (Domain Name System) is like the internet's directory, translating human-readable domain names (like myipreveal.com) into machine-readable IP addresses. It's essential for all internet communications, allowing you to access websites, send emails, and use online services without needing to remember numeric IP addresses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take for DNS changes to propagate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DNS propagation typically takes between 24-48 hours to complete worldwide, though many users may see changes sooner. The speed depends on the TTL (Time To Live) values of your DNS records, which control how long DNS servers should cache the information before checking for updates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are MX records used for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MX (Mail Exchange) records specify which mail servers are responsible for receiving email on behalf of a domain. They contain a priority value (lower numbers indicate higher priority) and the hostname of the mail server. When someone sends an email to your domain, their mail server uses MX records to determine where to deliver the message."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I use DNS lookup to troubleshoot email issues?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can use DNS lookup to verify that your domain has properly configured MX records pointing to your email provider's servers. Additionally, check for SPF, DKIM, and DMARC records (via TXT records) which help prevent email spoofing and improve deliverability. Incorrect or missing DNS records are a common cause of email delivery problems."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('dns-lookup-form');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const resultsContainer = document.getElementById('results-container');
+    const errorContainer = document.getElementById('error-container');
+    const errorMessage = document.getElementById('error-message');
+    const dnsResults = document.getElementById('dns-results');
+    const domainInfo = document.getElementById('domain-info');
+    const noRecords = document.getElementById('no-records');
+    const printButton = document.getElementById('print-button');
+    const copyLinkButton = document.getElementById('copy-link-button');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const domain = document.getElementById('domain').value.trim();
+        const recordType = document.getElementById('record-type').value;
+        
+        if (!domain) {
+            showError('Please enter a valid domain name');
+            return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.classList.remove('d-none');
+        resultsContainer.classList.add('d-none');
+        errorContainer.classList.add('d-none');
+        
+        // Make API request
+        fetch('/api/dns-lookup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ domain: domain, record_type: recordType })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide loading indicator
+            loadingIndicator.classList.add('d-none');
+            
+            if (data.error) {
+                showError(data.message || 'An error occurred during the DNS lookup');
+                return;
+            }
+            
+            displayResults(data, domain, recordType);
+            
+            // Update URL with parameters for sharing
+            updateURLWithParameters(domain, recordType);
+        })
+        .catch(error => {
+            loadingIndicator.classList.add('d-none');
+            showError('An error occurred while communicating with the server');
+            console.error('Error:', error);
+        });
+    });
+    
+    function displayResults(data, domain, recordType) {
+        // Show results container
+        resultsContainer.classList.remove('d-none');
+        
+        // Clear previous results
+        dnsResults.innerHTML = '';
+        
+        // Set domain info
+        domainInfo.textContent = domain + (recordType !== 'ALL' ? ' (' + recordType + ' Records)' : '');
+        
+        // Process records
+        if (data.records && data.records.length > 0) {
+            noRecords.classList.add('d-none');
+            
+            data.records.forEach(record => {
+                const row = document.createElement('tr');
+                row.className = 'result-item';
+                
+                // Record type
+                const typeCell = document.createElement('td');
+                typeCell.className = 'record-type';
+                typeCell.innerHTML = `<span class="badge bg-secondary">${record.type}</span>`;
+                row.appendChild(typeCell);
+                
+                // TTL
+                const ttlCell = document.createElement('td');
+                ttlCell.className = 'record-ttl';
+                ttlCell.textContent = record.ttl ? record.ttl + ' seconds' : 'N/A';
+                row.appendChild(ttlCell);
+                
+                // Value
+                const valueCell = document.createElement('td');
+                valueCell.className = 'record-value';
+                
+                // Format value based on record type
+                let valueText = '';
+                
+                switch (record.type) {
+                    case 'MX':
+                        valueText = `Priority: ${record.priority} | Server: ${record.value}`;
+                        break;
+                    case 'SOA':
+                        const soaData = record.value;
+                        valueText = `Primary NS: ${soaData.mname}<br>
+                                    Admin: ${soaData.rname}<br>
+                                    Serial: ${soaData.serial}<br>
+                                    Refresh: ${soaData.refresh}<br>
+                                    Retry: ${soaData.retry}<br>
+                                    Expire: ${soaData.expire}<br>
+                                    Minimum TTL: ${soaData.minimum}`;
+                        break;
+                    case 'TXT':
+                        // TXT records might contain special characters that need escaping
+                        valueText = record.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        break;
+                    default:
+                        valueText = record.value;
+                }
+                
+                valueCell.innerHTML = valueText;
+                row.appendChild(valueCell);
+                
+                dnsResults.appendChild(row);
+            });
+        } else {
+            noRecords.classList.remove('d-none');
+        }
+    }
+    
+    function showError(message) {
+        errorContainer.classList.remove('d-none');
+        errorMessage.textContent = message;
+        resultsContainer.classList.add('d-none');
+    }
+    
+    function updateURLWithParameters(domain, recordType) {
+        // Create shareable URL
+        const url = new URL(window.location);
+        url.searchParams.set('domain', domain);
+        url.searchParams.set('type', recordType);
+        window.history.replaceState({}, '', url);
+    }
+    
+    // Print button functionality
+    printButton.addEventListener('click', function() {
+        window.print();
+    });
+    
+    // Copy link button functionality
+    copyLinkButton.addEventListener('click', function() {
+        const currentUrl = window.location.href;
+        
+        navigator.clipboard.writeText(currentUrl).then(function() {
+            // Change button text temporarily to indicate success
+            const originalText = copyLinkButton.innerHTML;
+            copyLinkButton.innerHTML = '<i class="fas fa-check me-2"></i>Copied!';
+            
+            setTimeout(function() {
+                copyLinkButton.innerHTML = originalText;
+            }, 2000);
+        }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    });
+    
+    // Add a default example or previous search if available
+    const urlParams = new URLSearchParams(window.location.search);
+    const domainParam = urlParams.get('domain');
+    const typeParam = urlParams.get('type');
+    
+    if (domainParam) {
+        document.getElementById('domain').value = domainParam;
+        if (typeParam) {
+            document.getElementById('record-type').value = typeParam;
+        }
+        // Auto-submit if coming with parameters
+        form.dispatchEvent(new Event('submit'));
+    }
+});
+</script>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+    .dns-results {
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .result-item {
+        transition: background-color 0.2s;
+    }
+    
+    .result-item:hover {
+        background-color: rgba(33, 150, 243, 0.1) !important;
+    }
+    
+    .record-value {
+        word-break: break-word;
+        font-family: var(--bs-font-monospace);
+        font-size: 0.9rem;
+    }
+    
+    .interactive-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+    }
+    
+    .interactive-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-color: rgba(33, 150, 243, 0.4);
+    }
+    
+    .interactive-card .text-primary {
+        transition: color 0.2s;
+    }
+    
+    .interactive-card:hover .text-primary {
+        color: #42a5f5 !important;
+    }
+    
+    @media print {
+        .breadcrumb, form, .interactive-card, #print-button, #copy-link-button, .alert-info {
+            display: none !important;
+        }
+        
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa !important;
+            color: #000 !important;
+            border-bottom: 1px solid #dee2e6 !important;
+        }
+        
+        body {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    }
+</style>
+{% endblock %}

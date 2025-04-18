@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Use our IP address lookup tool to discover your location, ISP, city, and more. Fast and private results.">
+{% endblock %}
+
+{% block title %}IP Address Lookup – Track Location & ISP{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h1>IP Address Lookup</h1>
+            <p class="lead">Track any IP address location and provider information</p>
+        </div>
+
+        <div class="card ip-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-2">
+                    <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                        <i class="fas fa-print me-1"></i> Print IP Info
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <h3 class="h5 mb-3">Your Current IP Information</h3>
+                        
+                        {% if ip_info.error %}
+                            <div class="alert alert-danger">
+                                <p>{{ ip_info.message }}</p>
+                                <p>Please try again later.</p>
+                            </div>
+                        {% else %}
+                            <p><span class="ip-info-label">IP Address:</span> <span class="ip-info-value">{{ ip_info.ip }}</span></p>
+                            <p><span class="ip-info-label">Location:</span> <span class="ip-info-value">{{ ip_info.city }}, {{ ip_info.region }}, {{ ip_info.country_name }}</span></p>
+                            <p><span class="ip-info-label">ISP:</span> <span class="ip-info-value">{{ ip_info.org }}</span></p>
+                            <p><span class="ip-info-label">Coordinates:</span> <span class="ip-info-value">{{ ip_info.latitude }}, {{ ip_info.longitude }}</span></p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="h5 mb-3">Lookup Another IP Address</h3>
+                        <form id="ip-lookup-form" class="lookup-form">
+                            <div class="mb-3">
+                                <label for="ip-input" class="form-label">Enter IP Address</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="ip-input" placeholder="e.g., 8.8.8.8">
+                                    <button type="submit" class="btn btn-primary">Lookup</button>
+                                </div>
+                                <div class="form-text">Enter any IPv4 or IPv6 address</div>
+                            </div>
+                        </form>
+                        <div id="results-container">
+                            <!-- Results will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="section-header">About IP Address Lookup</h2>
+            <p>An IP address lookup allows you to find out the geographical location and network information associated with any IP address. This can be useful for several reasons:</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h3 class="h5 mb-3"><i class="fas fa-shield-alt me-2"></i> Security</h3>
+                            <p>Identify suspicious activity by looking up IPs that have accessed your accounts or systems. Investigate potentially malicious connections.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h3 class="h5 mb-3"><i class="fas fa-globe me-2"></i> Geolocation</h3>
+                            <p>Determine the physical location of a website's server or a user's general location. Useful for content localization or troubleshooting regional issues.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h3 class="h5">How does an IP address lookup work?</h3>
+                <p>Our IP lookup tool queries a comprehensive database of IP address allocations that are maintained by regional internet registries (RIRs). These registries assign blocks of IP addresses to organizations, ISPs, and other entities. By cross-referencing an IP with these databases, we can determine its geographical location, the organization it belongs to, and other related information.</p>
+                <p>Please note that IP geolocation is not always 100% accurate, especially at the city level. It provides a general approximation of where the IP is located, not the exact physical address.</p>
+            </div>
+            
+            <div class="alert alert-info mt-4">
+                <p class="mb-0"><strong>Privacy Note:</strong> We do not store or log the IP addresses you look up. Our tool is designed with privacy in mind.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

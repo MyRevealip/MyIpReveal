@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Terms of Service - MyIPReveal.com{% endblock %}
+
+{% block meta_description %}Read the terms and conditions that govern your use of MyIPReveal.com's IP address lookup and network tools.{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Terms of Service</li>
+        </ol>
+    </nav>
+    
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body p-md-5">
+                    <div class="d-flex justify-content-end mb-2">
+                        <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                            <i class="fas fa-print me-1"></i> Print Terms
+                        </button>
+                    </div>
+                    <h1 class="text-primary mb-4">Terms of Service</h1>
+                    <p class="lead">Last Updated: April 17, 2025</p>
+                    
+                    <div class="alert alert-info">
+                        <p class="mb-0"><strong>Summary:</strong> These terms outline the rules for using MyIPReveal.com. By using our website, you agree to these terms.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Acceptance of Terms</h2>
+                    <div class="term-section">
+                        <p>By accessing or using MyIPReveal.com (the "Website"), you agree to be bound by these Terms of Service. If you do not agree to all these terms, you should not use the Website.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Description of Services</h2>
+                    <div class="term-section">
+                        <p>MyIPReveal.com provides tools and information related to IP addresses, including but not limited to:</p>
+                        <ul>
+                            <li>IP address lookup</li>
+                            <li>Geolocation services</li>
+                            <li>IPv6 compatibility checking</li>
+                            <li>Educational resources about internet privacy and security</li>
+                        </ul>
+                        <p>We reserve the right to modify, suspend, or discontinue any part of the service at any time without prior notice.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">User Conduct</h2>
+                    <div class="term-section">
+                        <p>When using our Website, you agree not to:</p>
+                        <ul>
+                            <li>Use our services for any illegal activities</li>
+                            <li>Abuse, harass, or threaten others</li>
+                            <li>Attempt to gain unauthorized access to any part of the Website</li>
+                            <li>Interfere with the proper functioning of the Website</li>
+                            <li>Scrape or collect data from the Website beyond what is necessary for personal use</li>
+                            <li>Use automated systems or software to extract data from the Website (web scraping) without prior written consent</li>
+                            <li>Conduct security testing without explicit permission</li>
+                        </ul>
+                    </div>
+                    
+                    <h2 class="mt-4">Intellectual Property</h2>
+                    <div class="term-section">
+                        <p>All content on the Website, including text, graphics, logos, button icons, images, audio clips, digital downloads, and data compilations, is the property of MyIPReveal.com or its content suppliers and is protected by international copyright laws.</p>
+                        <p>You may not reproduce, duplicate, copy, sell, resell, or exploit any portion of the Website without express written permission from MyIPReveal.com.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">User Content</h2>
+                    <div class="term-section">
+                        <p>If you submit ideas, suggestions, or feedback about our services, you grant us a non-exclusive, royalty-free, perpetual, irrevocable right to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such content throughout the world in any media.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Privacy</h2>
+                    <div class="term-section">
+                        <p>Your use of the Website is also governed by our Privacy Policy, which can be found <a href="{{ url_for('privacy_policy') }}">here</a>.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Disclaimer of Warranties</h2>
+                    <div class="term-section">
+                        <p>The Website is provided "as is" and "as available" without any warranties of any kind, either express or implied, including but not limited to the implied warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+                        <p>We do not guarantee that:</p>
+                        <ul>
+                            <li>The Website will meet your specific requirements</li>
+                            <li>The Website will be uninterrupted, timely, secure, or error-free</li>
+                            <li>The results that may be obtained from the use of the Website will be accurate or reliable</li>
+                            <li>The quality of any products, services, information, or other material purchased or obtained by you through the Website will meet your expectations</li>
+                        </ul>
+                    </div>
+                    
+                    <h2 class="mt-4">Limitation of Liability</h2>
+                    <div class="term-section">
+                        <p>In no event shall MyIPReveal.com, its officers, directors, employees, or agents, be liable to you for any direct, indirect, incidental, special, punitive, or consequential damages whatsoever resulting from:</p>
+                        <ul>
+                            <li>Any errors, mistakes, or inaccuracies of content</li>
+                            <li>Personal injury or property damage of any nature resulting from your access to and use of the Website</li>
+                            <li>Any unauthorized access to or use of our secure servers and/or any personal information stored therein</li>
+                            <li>Any interruption or cessation of transmission to or from the Website</li>
+                            <li>Any bugs, viruses, Trojan horses, or the like, which may be transmitted to or through the Website by any third party</li>
+                        </ul>
+                    </div>
+                    
+                    <h2 class="mt-4">Indemnification</h2>
+                    <div class="term-section">
+                        <p>You agree to defend, indemnify, and hold harmless MyIPReveal.com and its officers, directors, employees, and agents, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees) arising from your use of and access to the Website.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Governing Law</h2>
+                    <div class="term-section">
+                        <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which MyIPReveal.com operates, without regard to its conflict of law provisions.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Changes to Terms</h2>
+                    <div class="term-section">
+                        <p>We reserve the right to modify these Terms at any time. We will notify users of any significant changes by posting a notice on the Website. Your continued use of the Website after such modifications will constitute your acknowledgment and acceptance of the modified terms.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Contact Information</h2>
+                    <div class="term-section">
+                        <p>If you have any questions about these Terms, please contact us at:</p>
+                        <p>Email: terms@myipreveal.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+    .term-section {
+        margin-bottom: 2rem;
+    }
+    
+    .term-section h3 {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        color: #495057;
+    }
+    
+    .term-section ul {
+        margin-bottom: 1.5rem;
+    }
+    
+    .term-section p {
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}

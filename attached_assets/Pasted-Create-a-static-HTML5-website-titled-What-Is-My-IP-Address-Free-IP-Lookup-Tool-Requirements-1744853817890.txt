@@ -1,0 +1,54 @@
+Create a static HTML5 website titled "What Is My IP Address – Free IP Lookup Tool".
+
+📌 Requirements:
+
+1. Homepage (`/`)
+   - Keyword: what is my ip address
+   - <title>: What Is My IP Address – Free IP Lookup Tool
+   - <meta description>: Quickly find your public IP address, location, and ISP info. No ads, no tracking – just a fast, free IP lookup tool.
+   - Automatically detect and display the user's IP address, location, ISP, and IPv6 if available using an external API (ipapi or ipinfo).
+   - Style with clean, mobile-friendly layout, fast load time, and clear headings (use h1 only once).
+
+2. Create the following SEO-optimized pages with clean URL slugs and metadata:
+   
+   `/ip-address-lookup`
+   - Keyword: ip address lookup
+   - <title>: IP Address Lookup – Track Location & ISP
+   - <meta description>: Use our IP address lookup tool to discover your location, ISP, city, and more. Fast and private results.
+
+   `/my-ip-address-location`
+   - Keyword: my ip address location
+   - <title>: My IP Address Location – Where Am I?
+   - <meta description>: Find out where your IP address says you're located. See your city, region, and ISP instantly.
+
+   `/ipv6-check`
+   - Keyword: what is my ipv6 address
+   - <title>: What Is My IPv6 Address – IPv6 Lookup Tool
+   - <meta description>: Check your IPv6 address online with our instant tool. Understand the difference between IPv4 and IPv6.
+
+   `/ip-locator`
+   - Keyword: ip locator
+   - <title>: IP Locator – Track IP in Seconds
+   - <meta description>: Use our IP locator to trace any IP address to its location and service provider. Fast and accurate tool.
+
+   `/current-ip-address`
+   - Keyword: current ip address
+   - <title>: Current IP Address – Instantly Detect Your IP
+   - <meta description>: Your current IP address is shown here along with location data. Accurate and private lookup tool.
+
+   `/ip-vs-mac-address`
+   - Keyword: ip vs mac address
+   - <title>: IP vs MAC Address – Key Differences Explained
+   - <meta description>: Learn the difference between an IP address and a MAC address with this clear and easy-to-understand guide.
+
+3. Add internal links between all pages and a simple footer with copyright and contact info.
+
+4. Ensure each page includes:
+   - Optimized meta tags
+   - One h1 with the primary keyword
+   - Responsive layout
+   - Fast loading and minimal external dependencies
+   - No tracking scripts or popups
+
+5. Output all pages as separate `.html` files ready for deployment on SiteGround.
+

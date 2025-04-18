@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Learn the difference between an IP address and a MAC address with this clear and easy-to-understand guide.">
+{% endblock %}
+
+{% block title %}IP vs MAC Address – Key Differences Explained{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h1>IP Address vs MAC Address</h1>
+            <p class="lead">Understanding the key differences between these two important network identifiers</p>
+        </div>
+
+        <div class="card ip-card mb-4">
+            <div class="card-body">
+                <h3 class="h5 mb-3">Your Current IP Address</h3>
+                {% if ip_info.error %}
+                    <div class="alert alert-danger">
+                        <p>{{ ip_info.message }}</p>
+                        <p>Please try again later.</p>
+                    </div>
+                {% else %}
+                    <p class="ip-display">{{ ip_info.ip }}</p>
+                    <p class="lead">This is your public IP address assigned by your ISP</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="card h-100 bg-dark">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0">IP Address</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Purpose:</strong> Network layer address used for logical identification and routing on the internet</p>
+                        <p><strong>Layer:</strong> Network Layer (Layer 3) in OSI model</p>
+                        <p><strong>Assignment:</strong> Assigned by network administrators or DHCP servers</p>
+                        <p><strong>Changeability:</strong> Can change when connecting to different networks</p>
+                        <p><strong>Format:</strong> 
+                            <ul>
+                                <li>IPv4: 32-bit number (e.g., 192.168.1.1)</li>
+                                <li>IPv6: 128-bit hexadecimal number (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334)</li>
+                            </ul>
+                        </p>
+                        <p><strong>Scope:</strong> Can be public (internet-wide) or private (local network only)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 bg-dark">
+                    <div class="card-header bg-secondary text-white">
+                        <h2 class="h4 mb-0">MAC Address</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Purpose:</strong> Physical address used to identify network interfaces at the hardware level</p>
+                        <p><strong>Layer:</strong> Data Link Layer (Layer 2) in OSI model</p>
+                        <p><strong>Assignment:</strong> Assigned by device manufacturer and burned into the network interface</p>
+                        <p><strong>Changeability:</strong> Generally permanent and doesn't change (though can be spoofed)</p>
+                        <p><strong>Format:</strong> 48-bit hexadecimal number, usually displayed as six pairs of characters separated by colons (e.g., 00:1A:2B:3C:4D:5E)</p>
+                        <p><strong>Scope:</strong> Local only (within the same network segment)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="section-header">Key Differences Explained</h2>
+            <p>While both IP addresses and MAC addresses serve as identifiers on a network, they function at different layers and serve different purposes.</p>
+            
+            <div class="table-responsive mt-4">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Characteristic</th>
+                            <th>IP Address</th>
+                            <th>MAC Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Primary Function</strong></td>
+                            <td>Logical addressing for routing data between networks</td>
+                            <td>Physical addressing for identifying specific hardware devices</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Structure</strong></td>
+                            <td>Hierarchical (network portion + host portion)</td>
+                            <td>Flat (no hierarchical structure)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Administration</strong></td>
+                            <td>Managed by IANA, RIRs, ISPs, and network administrators</td>
+                            <td>First half (OUI) managed by IEEE, second half by manufacturers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Visibility</strong></td>
+                            <td>Visible across the internet (public IPs)</td>
+                            <td>Only visible within the local network</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Example Use</strong></td>
+                            <td>Connecting to a website, routing internet traffic</td>
+                            <td>Data transfer between devices on the same LAN</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="h5 mt-5">How They Work Together</h3>
+            <p>IP and MAC addresses work together to ensure data reaches its correct destination:</p>
+            
+            <div class="card bg-dark mt-3">
+                <div class="card-body">
+                    <h4 class="h6">Communication Process Example</h4>
+                    <ol>
+                        <li><strong>Internet Request:</strong> When you want to visit a website, your computer uses DNS to find the IP address of the server hosting the website.</li>
+                        <li><strong>Routing:</strong> Your data packet contains the destination IP address, which routers use to forward the packet across the internet.</li>
+                        <li><strong>Local Network:</strong> When the packet reaches the local network segment, ARP (Address Resolution Protocol) is used to find the MAC address associated with the destination IP.</li>
+                        <li><strong>Final Delivery:</strong> The packet is delivered to the correct device based on its MAC address.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <h3 class="h5 mt-4">Why Both Are Necessary</h3>
+            <p>Both address types serve crucial but complementary roles:</p>
+            <ul>
+                <li><strong>IP addresses</strong> enable global routing across different networks and the internet, functioning like a postal address.</li>
+                <li><strong>MAC addresses</strong> provide a unique identifier for each network device, functioning like a name or serial number.</li>
+            </ul>
+            
+            <div class="alert alert-info mt-4">
+                <p class="mb-0"><strong>Practical Example:</strong> When a data packet moves from one network to another, routers examine the IP address to determine where to send it. Once the packet reaches the correct network, switches use the MAC address to deliver it to the specific device.</p>
+            </div>
+            
+            <h3 class="h5 mt-4">Privacy Considerations</h3>
+            <p>Understanding the differences between IP and MAC addresses has privacy implications:</p>
+            <ul>
+                <li>Your <strong>public IP address</strong> is visible to websites you visit and can reveal your approximate location.</li>
+                <li>Your <strong>MAC address</strong> isn't visible beyond your local network, but can be used for device tracking within the same network.</li>
+                <li>VPNs can mask your real IP address but don't affect your MAC address.</li>
+                <li>MAC address randomization (featured in modern mobile operating systems) helps prevent tracking across different Wi-Fi networks.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

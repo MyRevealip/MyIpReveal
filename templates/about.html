@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="About MyIPReveal.com - Learn about our mission and commitment to providing reliable IP address information services with a focus on user privacy and education.">
+<meta name="keywords" content="about myipreveal, ip address tool, ip lookup service, network information, privacy-focused tools">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="About MyIPReveal.com | Our Mission">
+<meta property="og:description" content="Learn about MyIPReveal.com and our commitment to providing accurate IP information while respecting user privacy.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://myipreveal.com/about">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About MyIPReveal.com | Our Mission">
+<meta name="twitter:description" content="Learn about MyIPReveal.com and our commitment to providing accurate IP information while respecting user privacy.">
+{% endblock %}
+
+{% block title %}About MyIPReveal.com | Our Mission{% endblock %}
+
+{% block header %}About MyIPReveal.com{% endblock %}
+{% block tagline %}Our mission and commitment to your privacy{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card content-card mb-5">
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-2">
+                    <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                        <i class="fas fa-print me-1"></i> Print This Page
+                    </button>
+                </div>
+                
+                <section class="mb-5">
+                    <h2 class="h3 section-header">Our Story</h2>
+                    <p>MyIPReveal.com was founded in 2023 by a team of network professionals and privacy advocates who recognized the need for a reliable, transparent, and privacy-focused IP address information service.</p>
+                    
+                    <p>After experiencing frustration with existing IP lookup tools that were cluttered with excessive advertising, collected user data, or provided inaccurate information, we decided to create a solution that would offer users a clean, straightforward way to access accurate IP information while respecting their privacy.</p>
+                    
+                    <p>Today, MyIPReveal.com serves thousands of users daily, providing essential network information tools without the intrusive practices common on many similar services.</p>
+                </section>
+                
+                <section class="mb-5">
+                    <h2 class="h3 section-header">Our Mission</h2>
+                    <p>At MyIPReveal.com, our mission is to:</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 bg-dark">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-info-circle me-2"></i> Provide Accurate Information</h3>
+                                    <p>Deliver precise and reliable IP address information using multiple verified data sources to ensure accuracy even during service outages.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 bg-dark">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-shield-alt me-2"></i> Respect User Privacy</h3>
+                                    <p>Maintain a strict no-logs policy for IP lookups and minimize data collection to only what's necessary for service operation.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 bg-dark">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-book me-2"></i> Educate Users</h3>
+                                    <p>Create accessible, informative content that helps users understand IP addresses, network concepts, and online privacy issues.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 bg-dark">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-laptop-code me-2"></i> Innovate Continuously</h3>
+                                    <p>Constantly improve our tools and develop new features to meet the evolving needs of users in an ever-changing internet landscape.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="mb-5">
+                    <h2 class="h3 section-header">Our Technology</h2>
+                    <p>MyIPReveal.com employs a range of technologies to provide reliable and accurate IP information:</p>
+                    
+                    <ul>
+                        <li><strong>Multiple API Providers:</strong> We use several IP geolocation data sources with automatic failover to ensure consistent service availability.</li>
+                        <li><strong>Advanced Caching System:</strong> Our optimized caching reduces API calls and delivers faster results while reducing dependency on external services.</li>
+                        <li><strong>Responsive Design:</strong> The site is built with a mobile-first approach, ensuring a seamless experience across all devices.</li>
+                        <li><strong>Performance Optimization:</strong> We employ modern web performance techniques including code minification, lazy loading, and browser caching to deliver a fast, efficient experience.</li>
+                    </ul>
+                </section>
+                
+                <section class="mb-5">
+                    <h2 class="h3 section-header">Our Privacy Commitment</h2>
+                    <p>At MyIPReveal.com, we believe that tools providing IP information should themselves respect user privacy. Our commitment includes:</p>
+                    
+                    <div class="alert alert-info mt-3">
+                        <h3 class="h5"><i class="fas fa-lock me-2"></i>Our Privacy Principles</h3>
+                        <ul class="mb-0">
+                            <li><strong>No Logging of IP Lookups:</strong> We don't store records of the IP addresses you look up.</li>
+                            <li><strong>Minimal Data Collection:</strong> We only collect the information necessary to provide our service.</li>
+                            <li><strong>No Third-Party Tracking:</strong> We limit third-party scripts that could potentially track users across the web.</li>
+                            <li><strong>Transparency:</strong> Our privacy policy clearly explains what limited data we do collect and how it's used.</li>
+                            <li><strong>Educational Resources:</strong> We provide resources to help users protect their own privacy online.</li>
+                        </ul>
+                    </div>
+                    
+                    <p class="mt-3">For complete details about how we handle your information, please see our <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>.</p>
+                </section>
+                
+                <section>
+                    <h2 class="h3 section-header">Contact Us</h2>
+                    <p>We welcome your feedback, questions, and suggestions about MyIPReveal.com. While we're a small team, we strive to respond to all inquiries in a timely manner.</p>
+                    
+                    <p>For general inquiries, reach out to us at: <strong>contact@myipreveal.com</strong></p>
+                    
+                    <p>For privacy-related concerns: <strong>privacy@myipreveal.com</strong></p>
+                    
+                    <div class="alert alert-secondary mt-3">
+                        <p class="mb-0"><strong>Note:</strong> All email addresses are protected by advanced spam filtering. Please include "MyIPReveal" in your subject line to ensure your message is properly routed.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="mt-4 text-center mb-5">
+            <h3 class="h4">Ready to discover more about your IP address?</h3>
+            <p class="lead mb-4">Explore our comprehensive suite of IP tools.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">Check My IP</a>
+                <a href="{{ url_for('ip_address_lookup') }}" class="btn btn-outline-primary">IP Lookup</a>
+                <a href="{{ url_for('ipv6_check') }}" class="btn btn-outline-primary">IPv6 Check</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

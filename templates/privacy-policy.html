@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy - MyIPReveal.com{% endblock %}
+
+{% block meta_description %}Our privacy policy explains how we collect, use, and protect your personal information when you use MyIPReveal.com's IP address tools and services.{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Privacy Policy</li>
+        </ol>
+    </nav>
+    
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body p-md-5">
+                    <div class="d-flex justify-content-end mb-2">
+                        <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                            <i class="fas fa-print me-1"></i> Print Policy
+                        </button>
+                    </div>
+                    <h1 class="text-primary mb-4">Privacy Policy</h1>
+                    <p class="lead">Last Updated: April 17, 2025</p>
+                    
+                    <div class="alert alert-info">
+                        <p class="mb-0"><strong>Summary:</strong> We respect your privacy. This policy describes what information we collect and how we use it when you visit MyIPReveal.com.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Information We Collect</h2>
+                    <div class="policy-section">
+                        <h3>IP Address Information</h3>
+                        <p>When you use our services, we temporarily process your IP address to provide information about it. This is the primary function of our service. We use third-party geolocation services to provide details about your IP address, including:</p>
+                        <ul>
+                            <li>Geographic location (city, region, country)</li>
+                            <li>Internet Service Provider (ISP) information</li>
+                            <li>Connection type</li>
+                        </ul>
+                        <p>We do not permanently store your IP address information in our database after your session ends unless you explicitly sign up for our newsletter or services.</p>
+                        
+                        <h3>Email Addresses</h3>
+                        <p>If you subscribe to our newsletter or download our privacy guide, we collect your email address with your consent. We use this information to:</p>
+                        <ul>
+                            <li>Send the resources you requested</li>
+                            <li>Provide periodic updates about internet privacy and security</li>
+                            <li>Share new features and tools available on our website</li>
+                        </ul>
+                    </div>
+                    
+                    <h2 class="mt-4">How We Use Cookies</h2>
+                    <div class="policy-section">
+                        <p>We use cookies to improve your experience on our website. Cookies are small text files stored on your device that help us:</p>
+                        <ul>
+                            <li>Remember your preferences</li>
+                            <li>Analyze website traffic and performance</li>
+                            <li>Enable certain website features to function properly</li>
+                        </ul>
+                        <p>You can manage or disable cookies through your browser settings. However, some features of our website may not function properly if cookies are disabled.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Analytics</h2>
+                    <div class="policy-section">
+                        <p>We use analytics tools to understand how visitors use our website. This helps us improve our services and user experience. The analytics information we collect includes:</p>
+                        <ul>
+                            <li>Pages viewed</li>
+                            <li>Time spent on our website</li>
+                            <li>Referring websites</li>
+                            <li>Browser and device information</li>
+                        </ul>
+                        <p>This information is collected in an anonymized format and used for statistical purposes only.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Third-Party Services</h2>
+                    <div class="policy-section">
+                        <p>We use the following third-party services to enhance our website functionality:</p>
+                        <ul>
+                            <li><strong>IP Geolocation APIs</strong>: We use third-party services to provide accurate information about IP addresses.</li>
+                            <li><strong>Email Marketing Services</strong>: For sending newsletters and the privacy guide to subscribers.</li>
+                            <li><strong>Analytics</strong>: To analyze website performance and user behavior.</li>
+                        </ul>
+                        <p>Each of these services has their own privacy policies governing how they handle data.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Data Retention</h2>
+                    <div class="policy-section">
+                        <p>We retain different types of data for different periods:</p>
+                        <ul>
+                            <li><strong>Email Subscriptions</strong>: We retain your email address until you unsubscribe.</li>
+                            <li><strong>Analytics Data</strong>: This is kept for up to 26 months.</li>
+                            <li><strong>IP Address Information</strong>: This is not permanently stored unless you subscribe to our services.</li>
+                        </ul>
+                    </div>
+                    
+                    <h2 class="mt-4">Your Rights</h2>
+                    <div class="policy-section">
+                        <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
+                        <ul>
+                            <li>The right to access your personal information</li>
+                            <li>The right to correct inaccurate information</li>
+                            <li>The right to delete your personal information</li>
+                            <li>The right to object to processing of your data</li>
+                            <li>The right to data portability</li>
+                        </ul>
+                        <p>To exercise any of these rights, please contact us at privacy@myipreveal.com.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Children's Privacy</h2>
+                    <div class="policy-section">
+                        <p>Our services are not intended for children under 16 years of age. We do not knowingly collect personal information from children under 16. If you believe we have collected information from a child under 16, please contact us immediately.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Changes to This Privacy Policy</h2>
+                    <div class="policy-section">
+                        <p>We may update this privacy policy from time to time. We will notify subscribers of any significant changes by email. We also encourage you to review this policy periodically.</p>
+                    </div>
+                    
+                    <h2 class="mt-4">Contact Us</h2>
+                    <div class="policy-section">
+                        <p>If you have any questions about this privacy policy or how we handle your personal information, please contact us at:</p>
+                        <p>Email: privacy@myipreveal.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+    .policy-section {
+        margin-bottom: 2rem;
+    }
+    
+    .policy-section h3 {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        color: #495057;
+    }
+    
+    .policy-section ul {
+        margin-bottom: 1.5rem;
+    }
+    
+    .policy-section p {
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}

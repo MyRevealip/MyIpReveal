@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Free online traceroute tool. Trace the route from our server to any IP address or domain, see each network hop, response times, and geographic locations.">
+<meta name="keywords" content="traceroute online, trace route, network path, network diagnostic tool, ping trace, route trace, network hops, ip traceroute">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Online Traceroute Tool | MyIPReveal.com">
+<meta property="og:description" content="Free online traceroute tool. Trace the route from our server to any IP address or domain, see each network hop, response times, and geographic locations.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://myipreveal.com/traceroute">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Online Traceroute Tool | MyIPReveal.com">
+<meta name="twitter:description" content="Free online traceroute tool. Trace the route from our server to any IP address or domain, see each network hop, response times, and geographic locations.">
+{% endblock %}
+
+{% block title %}Online Traceroute Tool | MyIPReveal.com{% endblock %}
+
+{% block header %}Online Traceroute Tool{% endblock %}
+{% block tagline %}Trace network paths and analyze internet routing{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="card content-card">
+            <div class="card-body p-md-5">
+                <div class="d-flex justify-content-end mb-2">
+                    <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                        <i class="fas fa-print me-1"></i> Print Results
+                    </button>
+                </div>
+                
+                <h2 class="h3 mb-4">Trace Network Routes</h2>
+                
+                <div class="alert alert-info">
+                    <p class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i> Traceroute shows the path that packets take to reach a destination, revealing each network router (hop) along the way, response times, and geographic locations.
+                    </p>
+                </div>
+                
+                <form id="traceroute-form" class="mb-4 network-tool-form" data-ajax="true" action="/api/traceroute">
+                    <div class="mb-3">
+                        <label for="target" class="form-label">Hostname or IP Address</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="target" name="target" 
+                                   placeholder="Enter a domain or IP address (e.g., google.com)" required>
+                            <button class="btn btn-primary" type="submit" id="trace-button">
+                                <i class="fas fa-play me-2"></i>Start Traceroute
+                            </button>
+                        </div>
+                        <div class="form-text text-muted">Examples: google.com, 8.8.8.8, amazon.com</div>
+                    </div>
+                </form>
+                
+                <!-- The loading spinner will be added by network-tools.js -->
+                <div id="results-container" class="results-container d-none"></div>
+                
+                <div id="error-container" class="alert alert-danger d-none">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="error-message"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-5">
+    <div class="col-lg-8">
+        <div class="card content-card">
+            <div class="card-body p-md-5">
+                <h2 class="h3 mb-4">About Traceroute</h2>
+                
+                <p>Traceroute is a network diagnostic tool that maps the journey taken by packets of information 
+                   across the internet. It shows the sequence of routers (hops) packets travel through to reach 
+                   a destination, helping diagnose network problems and understand internet routing.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <a href="javascript:void(0)" onclick="document.getElementById('target').value='8.8.8.8'; document.getElementById('traceroute-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                            <div class="card h-100 bg-dark interactive-card">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-search me-2"></i> Network Diagnostics</h3>
+                                    <p>Identify where network issues occur by pinpointing slow or unresponsive network segments along the route.</p>
+                                    <div class="mt-2 text-primary small">
+                                        <i class="fas fa-play me-1"></i> Try Example: Google DNS (8.8.8.8)
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <a href="javascript:void(0)" onclick="document.getElementById('target').value='github.com'; document.getElementById('traceroute-form').dispatchEvent(new Event('submit'));" class="text-decoration-none">
+                            <div class="card h-100 bg-dark interactive-card">
+                                <div class="card-body">
+                                    <h3 class="h5 mb-3"><i class="fas fa-map-marked-alt me-2"></i> Route Mapping</h3>
+                                    <p>Visualize the geographical path your data takes across networks and countries to reach a destination.</p>
+                                    <div class="mt-2 text-primary small">
+                                        <i class="fas fa-play me-1"></i> Try Example: GitHub.com
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <h3 class="h4 mt-4 mb-3">How Traceroute Works</h3>
+                
+                <p>Traceroute sends packets with incrementally increasing TTL (Time To Live) values:</p>
+                
+                <ol>
+                    <li>First packet has TTL of 1, causing it to expire at the first router</li>
+                    <li>The router sends back an ICMP "time exceeded" message</li>
+                    <li>Next packet has TTL of 2, reaching the second router</li>
+                    <li>Process continues until destination is reached</li>
+                </ol>
+                
+                <p>This method reveals each router in the path and measures response times, giving insight into network performance and routing.</p>
+                
+                <div class="alert alert-secondary mt-4">
+                    <h4 class="h5"><i class="fas fa-lightbulb me-2"></i>Common Uses for Traceroute</h4>
+                    <ul class="mb-0">
+                        <li>Troubleshooting network connectivity issues</li>
+                        <li>Identifying slow network segments</li>
+                        <li>Verifying routing configurations</li>
+                        <li>Detecting network changes or outages</li>
+                        <li>Understanding ISP routing paths</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schema.org structured data for NetworkTool -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online Traceroute Tool",
+  "applicationCategory": "NetworkingApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Free online traceroute tool. Trace the route from our server to any IP address or domain, see each network hop, response times, and geographic locations.",
+  "provider": {
+    "@type": "Organization",
+    "name": "MyIPReveal.com"
+  }
+}
+</script>
+
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a traceroute?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Traceroute is a network diagnostic tool that shows the path that packets take across the internet to reach a destination. It displays each router hop, response times, and can reveal where network issues might be occurring."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do some hops show asterisks (*) instead of times?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Asterisks indicate that a router didn't respond to the traceroute request. This is common and usually not a problem - many routers are configured not to respond to ICMP packets for security reasons, but still pass the traffic along."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is the geographical location information?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The geographic locations are based on IP geolocation databases, which provide an approximation of where a server might be physically located. While generally reliable for country-level information, city-level accuracy can vary."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can traceroute help diagnose connection problems?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, traceroute can help identify where in the network path problems are occurring. If the trace stops at a particular hop or shows very high latency at a specific point, it can indicate where the network issue is located."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the error container and message element
+    const errorContainer = document.getElementById('error-container');
+    const errorMessage = document.getElementById('error-message');
+    
+    // Initialize any example link functionality
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetParam = urlParams.get('target');
+    if (targetParam) {
+        document.getElementById('target').value = targetParam;
+        
+        // Trigger form submission for traceroute
+        setTimeout(function() {
+            document.getElementById('traceroute-form').dispatchEvent(new Event('submit'));
+        }, 500);
+    }
+    
+    // This is now handled by network-tools.js
+    console.log('Traceroute tool initialized with loading spinner support');
+});
+</script>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+    .traceroute-results {
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .traceroute-hop {
+        font-family: var(--bs-font-monospace);
+        font-size: 0.9rem;
+    }
+    
+    .traceroute-hop > div {
+        flex: 1;
+    }
+    
+    .hop-number {
+        flex: 0 0 40px !important;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .ip-address {
+        font-family: var(--bs-font-monospace);
+        flex: 0 0 150px !important;
+    }
+    
+    .response-time {
+        flex: 0 0 100px !important;
+        text-align: right;
+    }
+    
+    .interactive-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+    }
+    
+    .interactive-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-color: rgba(33, 150, 243, 0.4);
+    }
+    
+    .interactive-card .text-primary {
+        transition: color 0.2s;
+    }
+    
+    .interactive-card:hover .text-primary {
+        color: #42a5f5 !important;
+    }
+</style>
+{% endblock %}

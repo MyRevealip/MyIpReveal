@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="Use our IP locator to trace any IP address to its location and service provider. Fast and accurate tool.">
+{% endblock %}
+
+{% block title %}IP Locator – Track IP in Seconds{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h1>IP Locator</h1>
+            <p class="lead">Trace any IP address to its geographic location in seconds</p>
+        </div>
+
+        <div class="card ip-card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12 mb-4">
+                        <h3 class="h5 mb-3">Locate an IP Address</h3>
+                        <form id="ip-lookup-form" class="lookup-form">
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-lg" id="ip-input" placeholder="Enter any IP address (e.g., 8.8.8.8)">
+                                <button type="submit" class="btn btn-primary">Locate</button>
+                            </div>
+                            <div class="form-text">Enter any IPv4 or IPv6 address to locate it</div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div id="results-container">
+                    <!-- IP lookup results will appear here -->
+                    {% if not ip_info.error %}
+                    <div class="mt-4">
+                        <h3 class="h5 mb-3">Your Current IP Location</h3>
+                        <div class="card bg-dark">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><span class="ip-info-label">IP Address:</span> <span class="ip-info-value">{{ ip_info.ip }}</span></p>
+                                        <p><span class="ip-info-label">Country:</span> <span class="ip-info-value">{{ ip_info.country_name }}</span></p>
+                                        <p><span class="ip-info-label">Region:</span> <span class="ip-info-value">{{ ip_info.region }}</span></p>
+                                        <p><span class="ip-info-label">City:</span> <span class="ip-info-value">{{ ip_info.city }}</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span class="ip-info-label">ISP:</span> <span class="ip-info-value">{{ ip_info.org }}</span></p>
+                                        <p><span class="ip-info-label">Latitude:</span> <span class="ip-info-value">{{ ip_info.latitude }}</span></p>
+                                        <p><span class="ip-info-label">Longitude:</span> <span class="ip-info-value">{{ ip_info.longitude }}</span></p>
+                                        <p><span class="ip-info-label">Timezone:</span> <span class="ip-info-value">{{ ip_info.timezone }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="section-header">About IP Locator Tools</h2>
+            <p>An IP locator tool allows you to find the geographical location associated with an Internet Protocol (IP) address. These tools use various databases and techniques to determine information about the physical location of the device or network associated with a particular IP address.</p>
+            
+            <h3 class="h5 mt-4">How IP Locator Tools Work</h3>
+            <p>IP locator tools rely on databases that map IP addresses to physical locations. These databases are maintained by various organizations and are regularly updated as IP address allocations change. The accuracy of these tools depends on the quality and recency of the database being used.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h4 class="h6"><i class="fas fa-database me-2"></i> IP Address Registries</h4>
+                            <p class="mb-0">IP locators consult regional internet registries (ARIN, RIPE, APNIC, etc.) that distribute and manage IP addresses within specific geographic regions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 bg-dark">
+                        <div class="card-body">
+                            <h4 class="h6"><i class="fas fa-network-wired me-2"></i> ISP Data</h4>
+                            <p class="mb-0">Information from Internet Service Providers helps associate IP ranges with specific service areas and network locations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="h5 mt-4">Common Uses for IP Locator Tools</h3>
+            <ul>
+                <li><strong>Website Analytics:</strong> Understanding visitor demographics and location-based user behavior</li>
+                <li><strong>Content Customization:</strong> Delivering region-specific content or ads</li>
+                <li><strong>Fraud Prevention:</strong> Detecting unusual login locations or suspicious activities</li>
+                <li><strong>Network Troubleshooting:</strong> Diagnosing connectivity issues across different geographic regions</li>
+                <li><strong>Digital Forensics:</strong> Investigating the source of internet traffic</li>
+            </ul>
+            
+            <h3 class="h5 mt-4">Limitations of IP Geolocation</h3>
+            <p>While IP locator tools can provide useful information, they have certain limitations:</p>
+            <ul>
+                <li><strong>Accuracy varies:</strong> While country-level detection is typically reliable, city-level accuracy can vary significantly</li>
+                <li><strong>Proxy/VPN services:</strong> Users utilizing proxy servers or VPNs will show the location of the proxy/VPN server, not their actual location</li>
+                <li><strong>Corporate networks:</strong> Large organizations may route traffic through central points, making all employees appear to be in one location</li>
+                <li><strong>Mobile devices:</strong> Mobile IP addresses may be associated with the location of the carrier's network gateway rather than the actual device location</li>
+            </ul>
+            
+            <div class="alert alert-info mt-4">
+                <p class="mb-0"><strong>Privacy Note:</strong> Our IP locator service does not store or log the IP addresses you look up. We respect your privacy and provide this tool for informational purposes only.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="What Is My IP Address? Quickly find your public IP address, location, ISP info and check IPv6 connectivity with our free IP lookup tool. No ads, no tracking.">
+<meta name="keywords" content="what is my ip address, ip address lookup, my ip, check ip, ip finder, ipv6 checker, ip location, public ip">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="What Is My IP Address – MyIPReveal.com">
+<meta property="og:description" content="Find your public IP address, location, ISP info and check IPv6 connectivity with our free IP lookup tool.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://myipreveal.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What Is My IP Address – MyIPReveal.com">
+<meta name="twitter:description" content="Find your public IP address, location, ISP info and check IPv6 connectivity with our free IP lookup tool.">
+{% endblock %}
+
+{% block title %}What Is My IP Address – MyIPReveal.com | Free IP Lookup Tool{% endblock %}
+
+{% block header %}What Is My IP Address?{% endblock %}
+{% block tagline %}Your Public IP Address and location information instantly{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="card ip-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end mb-2">
+                    <button class="btn btn-outline-secondary btn-sm print-button no-print">
+                        <i class="fas fa-print me-1"></i> Print IP Info
+                    </button>
+                </div>
+                <div class="text-center">
+                    {% if ip_info.error %}
+                        <div class="alert alert-danger">
+                            <p>{{ ip_info.message }}</p>
+                            <p>Please try again later.</p>
+                        </div>
+                    {% else %}
+                        <h2 class="ip-display ip-result-item">{{ ip_info.ip }}</h2>
+                        <p class="lead mb-4"><strong data-i18n="This is your public IP address">This is your public IP address</strong></p>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="black-border-box ip-info-container">
+                                    <h3 class="h5 mb-3" data-i18n="Location"><i class="fas fa-map-marker-alt me-2"></i> Location</h3>
+                                    <p class="ip-info-item"><span class="ip-info-label" data-i18n="City:">City:</span> <span class="ip-info-value">{{ ip_info.city }}</span></p>
+                                    <p class="ip-info-item"><span class="ip-info-label" data-i18n="Region:">Region:</span> <span class="ip-info-value">{{ ip_info.region }}</span></p>
+                                    <p class="ip-info-item"><span class="ip-info-label" data-i18n="Country:">Country:</span> <span class="ip-info-value">{{ ip_info.country_name }}</span></p>
+                                    <div class="mt-2 small text-muted">
+                                      <i class="fas fa-info-circle"></i> Location is approximate based on IP registration, not your exact physical location.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="black-border-box ip-info-container">
+                                    <h3 class="h5 mb-3" data-i18n="Network"><i class="fas fa-network-wired me-2"></i> Network</h3>
+                                    <p class="ip-info-item"><span class="ip-info-label" data-i18n="ISP:">ISP:</span> <span class="ip-info-value">{{ ip_info.org }}</span></p>
+                                    <p class="ip-info-item"><span class="ip-info-label" data-i18n="ASN:">ASN:</span> <span class="ip-info-value">{{ ip_info.asn }}</span></p>
+                                    <p class="ip-info-item"><span class="ip-info-label" data-i18n="Timezone:">Timezone:</span> <span class="ip-info-value">{{ ip_info.timezone }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 ip-info-container">
+                            <p class="ip-info-item"><span class="ip-info-label" data-i18n="IPv6:">IPv6:</span> 
+                            {% if ip_info.version == 'IPv6' %}
+                                <span class="ip-info-value badge bg-success" data-i18n="IPv6 Enabled">IPv6 Enabled</span>
+                            {% else %}
+                                <span class="ip-info-value badge bg-secondary" data-i18n="IPv4 Only">IPv4 Only</span>
+                            {% endif %}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="h5">IP Address Lookup</h3>
+                    <p>Look up any IP address to find its location and ISP information.</p>
+                    <a href="/ip-address-lookup" class="btn btn-outline-primary">Try IP Lookup</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="h5">IP Location</h3>
+                    <p>Find out where your IP address says you're located and learn more.</p>
+                    <a href="/my-ip-address-location" class="btn btn-outline-primary">Check Location</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="h5">IPv6 Check</h3>
+                    <p>Test if your connection supports IPv6 and learn about this protocol.</p>
+                    <a href="/ipv6-check" class="btn btn-outline-primary">IPv6 Check</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="section-header">What Is My IP Address? Understanding IP Addresses</h2>
+            <p>An <strong>IP address</strong> (Internet Protocol address) is a numerical label assigned to each device connected to a computer network that uses the Internet Protocol for communication. When you ask "<strong>what is my IP</strong>," you're looking for this unique identifier. IP addresses serve two main functions: identifying the host or network interface, and providing the location of the host in the network.</p>
+            
+            <p>Your <strong>public IP address</strong> is how the internet identifies your device and location. It's assigned by your Internet Service Provider (ISP) and can reveal information about your approximate geographic location. Using our <strong>IP lookup tool</strong>, you can instantly see your IP address and related information.</p>
+            
+            <div class="alert alert-info mt-3">
+                <h3 class="h5"><i class="fas fa-info-circle me-2"></i>Why is my location not accurate?</h3>
+                <p class="mb-0">IP geolocation is based on where your Internet Service Provider has registered the IP address, not your exact GPS location. This means your detected location might be off by several miles or even show a different city, especially if you're using a mobile network or VPN. This is normal and actually provides you some level of privacy.</p>
+            </div>
+            
+            <h3 class="h5 mt-4">Different Types of IP Addresses</h3>
+            <p>There are several types of IP addresses you might encounter when performing an <strong>IP address lookup</strong>:</p>
+            <ul>
+                <li><strong>IPv4 Address</strong>: The most common format, consisting of four sets of numbers separated by dots (e.g., 192.168.1.1)</li>
+                <li><strong>IPv6 Address</strong>: The newer standard with a much larger address space, written as eight groups of hexadecimal digits (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334)</li>
+                <li><strong>Public IP Address</strong>: The address visible to the outside world when you connect to the internet</li>
+                <li><strong>Private IP Address</strong>: Used within local networks and not directly accessible from the internet</li>
+            </ul>
+            
+            <h3 class="h5 mt-4">Why Check Your IP Address?</h3>
+            <p>There are several reasons to use an <strong>IP checker</strong> like ours:</p>
+            <ul>
+                <li>Verify your internet connection is working properly</li>
+                <li>Check if your VPN is successfully masking your true location</li>
+                <li>Troubleshoot network connectivity issues</li>
+                <li>See what information websites can learn about you</li>
+                <li>Determine if you have <strong>IPv6 connectivity</strong></li>
+            </ul>
+            
+            <p class="mt-3">We provide this free service to help you quickly identify your IP address and learn more about what information it reveals about you online. Our <strong>IP lookup tool</strong> is fast, accurate, and respects your privacy with no logging of your data.</p>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="mt-5 mb-4">
+            <h2 class="section-header">Frequently Asked Questions About IP Addresses</h2>
+            
+            <div class="accordion mt-4" id="ipFaqAccordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            How can I hide my IP address?
+                        </button>
+                    </h3>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="faqOne" data-bs-parent="#ipFaqAccordion">
+                        <div class="accordion-body">
+                            <p>There are several ways to hide your IP address:</p>
+                            <ul>
+                                <li><strong>Use a VPN (Virtual Private Network)</strong>: A VPN creates an encrypted connection to a server operated by the VPN provider, masking your real IP address with one from their network.</li>
+                                <li><strong>Use the Tor Browser</strong>: Tor routes your connection through multiple servers around the world, making it difficult to trace your original IP address.</li>
+                                <li><strong>Use a proxy server</strong>: Similar to VPNs but generally with less security and privacy protection.</li>
+                                <li><strong>Use public Wi-Fi</strong>: When you connect to public Wi-Fi, your home IP address is not being used, though this comes with its own security risks.</li>
+                            </ul>
+                            <p>For maximum privacy and security, a reputable VPN service is generally the most recommended solution for everyday users.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Why is my IP location showing the wrong city?
+                        </button>
+                    </h3>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="faqTwo" data-bs-parent="#ipFaqAccordion">
+                        <div class="accordion-body">
+                            <p>IP geolocation is often inaccurate for several reasons:</p>
+                            <ul>
+                                <li><strong>ISP location vs. your location</strong>: Your IP is associated with your Internet Service Provider's location, which may be in a different city than your physical location.</li>
+                                <li><strong>Outdated geolocation databases</strong>: IP databases may not be updated with the latest IP allocation information.</li>
+                                <li><strong>Mobile networks</strong>: If you're using a mobile data connection, your IP may be associated with a central location where your mobile provider routes traffic.</li>
+                                <li><strong>VPN usage</strong>: If you're using a VPN, the location will show where the VPN server is located, not your actual location.</li>
+                            </ul>
+                            <p>IP geolocation is typically accurate to the level of your ISP's service area, which could be off by several miles or even show a completely different city, especially in rural areas.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            What's the difference between a public and private IP address?
+                        </button>
+                    </h3>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="faqThree" data-bs-parent="#ipFaqAccordion">
+                        <div class="accordion-body">
+                            <p><strong>Public IP Address:</strong></p>
+                            <ul>
+                                <li>Assigned by your Internet Service Provider</li>
+                                <li>Visible to websites, online services, and other internet users</li>
+                                <li>Uniquely identifies your network on the internet</li>
+                                <li>Example: The IP address shown at the top of this page</li>
+                            </ul>
+                            
+                            <p><strong>Private IP Address:</strong></p>
+                            <ul>
+                                <li>Assigned by your local router</li>
+                                <li>Only visible within your local network</li>
+                                <li>Follows specific patterns (192.168.x.x, 10.x.x.x, or 172.16.x.x-172.31.x.x)</li>
+                                <li>Example: 192.168.1.5 (not visible to the outside world)</li>
+                            </ul>
+                            
+                            <p>Think of your public IP like your home's street address (visible to everyone), while private IPs are like room numbers inside your house (only meaningful within your home).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Can someone hack me using my IP address?
+                        </button>
+                    </h3>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="faqFour" data-bs-parent="#ipFaqAccordion">
+                        <div class="accordion-body">
+                            <p>While knowing your IP address alone isn't usually enough for someone to hack your device, it can be used in several concerning ways:</p>
+                            
+                            <ul>
+                                <li><strong>DDoS attacks</strong>: An attacker could target your IP with a Distributed Denial of Service attack to disrupt your internet connection.</li>
+                                <li><strong>Approximate geolocation</strong>: They could determine your general location (usually city level, not your exact address).</li>
+                                <li><strong>Port scanning</strong>: They might scan your IP for open ports that could potentially be exploited, though modern routers and firewalls provide protection against this.</li>
+                                <li><strong>Social engineering</strong>: Information from your IP could be combined with other data for targeted scams.</li>
+                            </ul>
+                            
+                            <p>To stay protected:</p>
+                            <ul>
+                                <li>Keep your devices and router firmware updated</li>
+                                <li>Use strong firewalls and security software</li>
+                                <li>Consider using a VPN for sensitive activities</li>
+                                <li>Be cautious about which websites and services you share information with</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqFive">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            Why do I need IPv6 and is it better than IPv4?
+                        </button>
+                    </h3>
+                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="faqFive" data-bs-parent="#ipFaqAccordion">
+                        <div class="accordion-body">
+                            <p>IPv6 was developed to address several limitations of IPv4:</p>
+                            
+                            <p><strong>Advantages of IPv6:</strong></p>
+                            <ul>
+                                <li><strong>Larger address space</strong>: IPv6 provides 340 undecillion addresses compared to IPv4's 4.3 billion, solving the address exhaustion problem</li>
+                                <li><strong>Improved security</strong>: IPv6 was built with IPSec (Internet Protocol Security) as a core requirement</li>
+                                <li><strong>Better performance</strong>: More efficient routing and packet processing, with no need for Network Address Translation (NAT)</li>
+                                <li><strong>Auto-configuration</strong>: IPv6 has better plug-and-play capabilities for device setup</li>
+                                <li><strong>Future-proof</strong>: Designed to handle the growing number of internet-connected devices</li>
+                            </ul>
+                            
+                            <p>While IPv6 is technically superior, both protocols currently coexist. Most modern devices and networks support both IPv4 and IPv6, often referred to as "dual-stack." The transition to IPv6-only networks is happening gradually, but IPv4 will remain in use for years to come.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How can I hide my IP address?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<p>There are several ways to hide your IP address:</p><ul><li>Use a VPN (Virtual Private Network): A VPN creates an encrypted connection to a server operated by the VPN provider, masking your real IP address with one from their network.</li><li>Use the Tor Browser: Tor routes your connection through multiple servers around the world, making it difficult to trace your original IP address.</li><li>Use a proxy server: Similar to VPNs but generally with less security and privacy protection.</li><li>Use public Wi-Fi: When you connect to public Wi-Fi, your home IP address is not being used, though this comes with its own security risks.</li></ul><p>For maximum privacy and security, a reputable VPN service is generally the most recommended solution for everyday users.</p>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my IP location showing the wrong city?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<p>IP geolocation is often inaccurate for several reasons:</p><ul><li>ISP location vs. your location: Your IP is associated with your Internet Service Provider's location, which may be in a different city than your physical location.</li><li>Outdated geolocation databases: IP databases may not be updated with the latest IP allocation information.</li><li>Mobile networks: If you're using a mobile data connection, your IP may be associated with a central location where your mobile provider routes traffic.</li><li>VPN usage: If you're using a VPN, the location will show where the VPN server is located, not your actual location.</li></ul><p>IP geolocation is typically accurate to the level of your ISP's service area, which could be off by several miles or even show a completely different city, especially in rural areas.</p>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between a public and private IP address?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<p><strong>Public IP Address:</strong></p><ul><li>Assigned by your Internet Service Provider</li><li>Visible to websites, online services, and other internet users</li><li>Uniquely identifies your network on the internet</li><li>Example: The IP address shown at the top of this page</li></ul><p><strong>Private IP Address:</strong></p><ul><li>Assigned by your local router</li><li>Only visible within your local network</li><li>Follows specific patterns (192.168.x.x, 10.x.x.x, or 172.16.x.x-172.31.x.x)</li><li>Example: 192.168.1.5 (not visible to the outside world)</li></ul><p>Think of your public IP like your home's street address (visible to everyone), while private IPs are like room numbers inside your house (only meaningful within your home).</p>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can someone hack me using my IP address?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<p>While knowing your IP address alone isn't usually enough for someone to hack your device, it can be used in several concerning ways:</p><ul><li>DDoS attacks: An attacker could target your IP with a Distributed Denial of Service attack to disrupt your internet connection.</li><li>Approximate geolocation: They could determine your general location (usually city level, not your exact address).</li><li>Port scanning: They might scan your IP for open ports that could potentially be exploited, though modern routers and firewalls provide protection against this.</li><li>Social engineering: Information from your IP could be combined with other data for targeted scams.</li></ul><p>To stay protected:</p><ul><li>Keep your devices and router firmware updated</li><li>Use strong firewalls and security software</li><li>Consider using a VPN for sensitive activities</li><li>Be cautious about which websites and services you share information with</li></ul>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do I need IPv6 and is it better than IPv4?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<p>IPv6 was developed to address several limitations of IPv4:</p><p><strong>Advantages of IPv6:</strong></p><ul><li>Larger address space: IPv6 provides 340 undecillion addresses compared to IPv4's 4.3 billion, solving the address exhaustion problem</li><li>Improved security: IPv6 was built with IPSec (Internet Protocol Security) as a core requirement</li><li>Better performance: More efficient routing and packet processing, with no need for Network Address Translation (NAT)</li><li>Auto-configuration: IPv6 has better plug-and-play capabilities for device setup</li><li>Future-proof: Designed to handle the growing number of internet-connected devices</li></ul><p>While IPv6 is technically superior, both protocols currently coexist. Most modern devices and networks support both IPv4 and IPv6, often referred to as 'dual-stack.' The transition to IPv6-only networks is happening gradually, but IPv4 will remain in use for years to come.</p>"
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Privacy Guide Promotion -->
+<div class="mt-5 mb-4">
+    <div class="card promo-card">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="h3 mb-3">Protect Your Online Privacy</h2>
+                    <p class="lead mb-3">Your IP address reveals more about you than you might realize. Take control of your digital footprint with our free privacy guide.</p>
+                    <p class="mb-4">Learn how to hide your IP address, browse anonymously, and protect your personal information online.</p>
+                    <a href="/downloads/privacy-guide" class="btn btn-primary btn-lg">
+                        <i class="fas fa-shield-alt me-2"></i> Download Free Privacy Guide
+                    </a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="guide-preview-small">
+                        <i class="fas fa-lock fa-5x text-primary mb-3"></i>
+                        <p class="mb-0 lead">IP Address Privacy Guide</p>
+                        <p class="text-muted">Free PDF Download</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

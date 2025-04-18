@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Quickly find your public IP address, location, and ISP info. No ads, no tracking – just a fast, free IP lookup tool.">
+  <title>What Is My IP Address – Free IP Lookup Tool</title>
+  <link href="style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>What Is My IP Address?</h1>
+      <p>Instant, secure, and ad-free IP lookup tool.</p>
+    </div>
+  </header>
+  <main>
+    <div class="card">
+      <h2>Your IP Details</h2>
+      <ul id="ip-info">
+        <li><strong>IPv4:</strong> <span id="ipv4">Loading...</span></li>
+        <li><strong>IPv6:</strong> <span id="ipv6">Loading...</span></li>
+        <li><strong>City:</strong> <span id="city">Loading...</span></li>
+        <li><strong>Region:</strong> <span id="region">Loading...</span></li>
+        <li><strong>ISP:</strong> <span id="isp">Loading...</span></li>
+      </ul>
+    </div>
+  </main>
+  <footer>
+    <p>© 2025 YourSiteName. All rights reserved.</p>
+  </footer>
+  <script>
+    fetch("https://ipapi.co/json")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("ipv4").textContent = data.ip;
+        document.getElementById("city").textContent = data.city;
+        document.getElementById("region").textContent = data.region;
+        document.getElementById("isp").textContent = data.org;
+      });
+  </script>
+</body>
+</html>
